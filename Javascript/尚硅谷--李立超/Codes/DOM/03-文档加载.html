@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- 
+			文档按照从上到下的顺序执行，body定义的标签不能再title中直接获取
+			因为title中的语句会优先执行，即，再没有生成标签时，已经执行了对应的函数
+		-->
+		<script type="text/javascript">
+			// 为window绑定onload事件
+			// 该事件相应的函数在页面加载完成之后触发
+			window.onload = function(){
+				let btn = document.getElementById('btn');
+				btn.onclick = function(){
+					alert('Clicked!');
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<button id='btn'> Click here</button>
+	</body>
+</html>

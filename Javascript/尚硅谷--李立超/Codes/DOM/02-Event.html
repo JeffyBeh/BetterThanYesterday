@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<!-- 
+			处理事件：
+				1. 在事件属性中添加js代码
+					-- 这种写法，结构和行为耦合，不方便维护
+		-->
+<!-- 		<button id='btn' onclick="displayDate()">确认</button> -->		
+
+		<!-- 2. 获取按钮对象 -->
+		<button id='btn'> Click here</button>
+		<script type="text/javascript">
+			let btn = document.getElementById('btn');
+			// 响应函数（回调函数），在事件被触发的时候响应
+			btn.onclick = function(){
+				alert('Success!');
+			};
+		</script>
+	</body>
+</html>

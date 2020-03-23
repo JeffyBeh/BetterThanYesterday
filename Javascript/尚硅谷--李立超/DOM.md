@@ -18,7 +18,7 @@
 
   - 用来表示对象之间的关系，方便我们获取对象
 
-    <img src="./res/model.png"/>
+<img src="./res/model.png"/>
 
 ### 节点 Node
 
@@ -37,3 +37,22 @@
 | 元素节点 | 标签名    | 1        | null      |
 | 属性节点 | 属性名    | 2        | 属性值    |
 | 文本节点 | #text     | 3        | ⭐<font color="red">文本内容</font> |
+
+### 事件
+
+- 事件：文档或浏览器窗口中发生的一些特定的交互瞬间
+- js和html通过事件进行交互
+- 如点击/键盘响应等
+
+### 获取元素节点
+
+- 通过document对象调用
+  1. getElementById()
+     - 通过**<font color='red'>id</font>**属性获取**<font color='red'>一个</font>**元素节点对象
+  2. getElementsByTagName()
+     - 通过**<font color='red'>标签名</font>**获取**<font color='red'>一组</font>**元素节点对象
+  3. getElementsByName()
+     - 通过**<font color='red'>name</font>**属性获取**<font color='red'>一组</font>**元素节点对象
+
+
+
