@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			<!-- 清楚默认样式 -->
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			#outer{
+				width: 860px;
+				/* 设置居中 */
+				margin: 50px auto;
+				background-color: greenyellow;
+				padding: 10px;
+				/*内联样式//文本居中*/
+				text-align: center;	
+			}
+			#changeImg{
+				width: 860px;
+			}
+		 </style>
+		<script type="text/javascript">
+
+			window.onload = function(){
+				let lastImg = document.getElementById("lastImg");
+				let nextImg = document.getElementById("nextImg");
+
+				let index = 0;
+				let imgArr = ["IMG/01.jpg", "IMG/02.jpg", "IMG/03.jpg", "IMG/04.jpg"];
+				let img = document.getElementById("changeImg");
+				
+				// 添加图片切换提示信息
+				let imgInfo = document.getElementById('info');
+				imgInfo.innerHTML = "共" + imgArr.length +"张图片， 这是第" + (index + 1) + "张图片";
+				/*
+				* 切换图片即修改src标签的src属性
+				*/
+				lastImg.onclick = function(){
+					index--;
+					if(index == -1){
+						index = 3;
+					}
+
+					img.src = imgArr[index];
+					
+					imgInfo.innerHTML = "共" + imgArr.length +"张图片， 这是第" + (index + 1) + "张图片";
+				}
+
+				nextImg.onclick = function(){
+					index = ++index % 4;
+					img.src = imgArr[index];
+					
+					imgInfo.innerHTML = "共" + imgArr.length +"张图片， 这是第" + (index + 1) + "张图片";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="outer">
+			<p id='info'></p>
+			<img id="changeImg" src="IMG/01.jpg" alt="Error">
+			<button id="lastImg">上一张</button>
+			<button id="nextImg">下一张</button>
+		</div>
+	</body>
+</html>

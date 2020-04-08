@@ -54,5 +54,25 @@
   3. getElementsByName()
      - 通过**<font color='red'>name</font>**属性获取**<font color='red'>一组</font>**元素节点对象
 
+### 获取元素节点的子节点
+
+- 通过具体元素节点调用
+  - getElementsByTagName()
+    - <font color="red">-方法</font>，返回当前节点的指定标签名后代节点
+  - childNodes
+    - <font color='red'>-属性</font>，表示当前节点的所有子节点
+  - firstChild/lastChild
+    - <font color='red'>-属性</font>，表示当前节点的第一个/最后一个子节点
+
+### 获取父节点和兄弟节点
+
+- 通过具体的节点调用
+  - parentNode
+    - <font color='red'>-属性</font>，表示当前节点的父节点
+  - previousSibling
+    - <font color='red'>-属性</font>，表示当前节点的前一个兄弟节点
+  - nextSibling
+    - <font color='red'>-属性</font>，表示当前节点的后一个兄弟节点
+
 
 

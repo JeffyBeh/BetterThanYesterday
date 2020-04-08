@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			
+			let myClick = function(idStr, fun){
+				let btn = document.getElementById(idStr);
+				btn.onclick = fun;
+			}
+			
+			let obj = document.getElementsByName('items');
+			
+			window.onload = function(){
+				// 全选
+				let isSelectAll = document.getElementById('isSelectAll');
+				
+				myClick('selectAll', function(){
+					for(let i=0; i<obj.length; i++){
+						// 获取选中状态，如果没有选中，则点击（选中）
+						if(!obj[i].checked){
+							// 直接设置checked值为true
+							obj[i].checked = true;
+							// 点击一下
+							// selectAll[i].click();
+						}
+					}
+					isSelectAll.checked = true;
+				});
+				
+				// 全不选
+				myClick('unselectAll', function(){
+					// 所有复选框设置为false
+					for(let i=0; i<obj.length; i++){
+						obj[i].checked = false;
+					}
+					// 全选/全部不选复选框 false
+					isSelectAll.checked = false;
+				});
+				
+				// 反选
+				myClick('invertSelect', function(){
+					for(let i=0; i<obj.length; i++){
+						obj[i].checked = !obj[i].checked;
+					}
+					
+					// 遍历对全选判断
+					isSelectAll.checked = true;
+					for(let j=0; j<obj.length; j++){
+						if(!obj[j].checked){
+							isSelectAll.checked = false;
+							break;
+						}
+					}
+				});
+				
+				// 提交
+				myClick('submit', function(){
+					// 提示选中的value
+					for(let i=0; i<obj.length; i++){
+						if(obj[i].checked){
+							alert(obj[i].value);
+						}
+					}
+				});
+				
+				
+				// 全选/全不选复选框
+				myClick('isSelectAll', function(){
+					
+					if(isSelectAll.checked){
+						for(let i=0; i<obj.length; i++){
+							obj[i].checked = true;
+						}
+					} else {
+						for(let i=0; i<obj.length; i++){
+							obj[i].checked = false;
+						}
+					}
+				});	
+				
+				// 全选/全不选复选框跟随选择变化
+				/**
+				 * 对每一个checkbox添加监听
+				 * */
+				
+				for(let i=0; i<obj.length; i++){
+					obj[i].onclick = function(){
+						
+						isSelectAll.checked = true;
+						for(let j=0; j<obj.length; j++){
+							if(!obj[j].checked){
+								isSelectAll.checked = false;
+								break;
+							}
+						}
+					};
+				}
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<p>
+			你的爱好是什么？
+			<Input id="isSelectAll" type="checkBox" >全选/全不选</Input>
+		</p>
+		<Input id="football" type="checkBox" name="items" value="足球">足球</Input>
+		<Input id="basketball" type="checkBox" name="items" value="篮球">篮球</Input>
+		<Input id="pingPangBall" type="checkBox" name="items" value="乒乓球">乒乓球</Input>
+		<Input id="badminton" type="checkBox" name="items" value="羽毛球">羽毛球</Input>
+		</br>
+		<Input type="button" id="selectAll" value="全选"/>
+		<button id="unselectAll"/>全不选
+		<button id="invertSelect"/>反选
+		<button id="submit"/>提交
+	</body> 
+</html>

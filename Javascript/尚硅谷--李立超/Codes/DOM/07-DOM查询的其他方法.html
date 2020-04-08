@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			window.onload = function(){
+				/**
+				 * 获取body标签
+				 * */
+				// 方法一：获取body标签中的第一个（返回的collection中只有一个标签）
+				// let body = document.getElementsByTagName('body')[0];
+				
+				// 方法二：通过body属性，获取body标签
+				let body = document.body;
+				alert(body);
+				
+				/**
+				 * document.documentElement保存的是html标签
+				 * **/
+				alert(document.documentElement);
+				
+				
+				/**
+				 * document.all/document.getElementByTagName("*")
+				 * 		保存页面中所有的元素
+				 * 
+				 * */
+				alert(document.all);
+				
+				
+				/**
+				 * 根据元素属性值查询一组元素节点对象 ie9+
+				 * */
+				let box1 = document.getElementsByClassName('box1');
+				
+				
+				/**
+				 * document.querySelector()
+				 * 		- 参数：选择器字符串
+				 * 		- 作用：根据一个CSS选择器查询元素节点对象
+				 * 		- 特点：使用该方法只能返回一个元素，如果满足条件有多个，则只返回第一个
+				 * */
+				 
+				 document.querySelector(".box div");
+				 // 通过该方法可以获取class元素 ie8
+				 document.querySelector('.box');
+				 
+				 
+				/**
+				 * document.querySelectorAll()
+				 * 		- 获取全部
+				 * 		- 返回值为数组（一个也是数组）
+				 * */
+			}
+		</script>
+	</head>
+	<body>
+		<div class=".class"></div>
+		<div id="#id"></div>
+	</body>
+</html>
