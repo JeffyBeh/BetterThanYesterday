@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#info{
+				width: 300px;
+				height: 500px;
+				background-color: #ADFF2F;
+				overflow: auto;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				
+				/**
+				 * 当垂直滚动条滚动到底时，表单项可用
+				 *  onscroll 该事件再元素滚动条滚动时触发
+				 */
+				let info = document.getElementById("info");
+				info.onscroll = function(){
+					
+					// 检查垂直滚动条是否滚动到底
+					if(info.scrollHeight - info.scrollTop == info.clientHeight){
+						let inputs = document.getElementsByTagName("input");
+						input[0].disable(false);
+						input[1].disable(false);
+					}
+				}
+				
+				let btn = document.getElementById("btn01");
+				btn.onclick = function(){
+					alert(info.scrollHeight - info.scrollTop);
+					alert(info.clientHeight);
+					let inputs = document.getElementsByTagName("input");
+					inputs[0].disabled = false;
+					inputs[1].disabled = false;
+				}
+
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn01">click here</button>
+		<h3> 欢迎注册 </h3>
+		<p id="info">
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+			请仔细阅读条款内容，阅读完成方可注册！
+		</p>
+		<!-- disabled 表单项不可用 -->
+		<input type="checkbox" disabled="disabled"> 我已仔细阅读条款内容</input>
+		<input type="button" value="注册" disabled="disabled"/>
+	</body>
+</html>

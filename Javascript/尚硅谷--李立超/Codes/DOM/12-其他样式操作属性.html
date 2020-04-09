@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#box1{
+				width:100px;
+				height:100px;
+				background-color: red;
+				padding: 10px;
+				border: 20px solid yellow;
+				margin: 10px;
+			}
+			
+			#box4{
+				width: 200px;
+				height: 200px;
+				background-color: #bfa;
+				
+				/**
+				 * hidden：隐藏子元素溢出 
+				 * auto：滚动条
+				 */
+				overflow: auto;
+			}
+			
+			#box3{
+				width: 450px;
+				height: 500px;
+				background-color: #FF0000;
+				
+				
+			}
+		</style>
+		
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				let btn01 = document.getElementById("btn01");
+				let box1 = document.getElementById("box1");
+				
+				btn01.onclick = function(){
+					
+					/**
+					 * clientWidth/clientHeight
+					 * 	- 获取元素可见的的宽度/高度，包括内容区和内边距
+					 * 	- 返回值为数值，不带px
+					 * 	- 只读
+					 */
+					// alert(box1.clientHeight);
+					
+					/**
+					 * offsetHeight/offsetWidth
+					 * 	- 获取元素的高度/宽度，包括内容区、内边距、边框
+					 * 	- 返回值为数值
+					 * 	- 只读
+					 */
+					// alert(box1.offsetHeight);
+				
+					/**
+					 * offsetParent
+					 * 	- 获取当前元素定位父元素
+					 * 	- 获取距离当前元素最近的开启了定位的祖先元素
+					 * 		- static 静止定位，默认值
+					 *  	- relative 相对定位
+					 *  	- absolute 绝对定位
+					 *  	- fixed 固定定位
+					 */
+					// let op = box1.offsetParent;
+					// alert(op);
+					
+					/**
+					 * offsetLeft
+					 * 	- 当前元素相对于其定位元素的水平偏移量
+					 * offsetTop
+					 * 	- 当前元素相对于其定位元素的垂直偏移量
+					 */
+					
+					// alert(box1.offsetLeft);
+					// alert(box1.offsetTop);
+					
+					let box4 = document.getElementById("box4");
+					// alert(box4.clientHeight);
+					/**
+					 * scrollHeight/scrollWidth
+					 * 	- 获取元素整个滚动区域的高度/宽度
+					 */
+					// alert(box4.scrollHeight);
+					
+					/**
+					 * scrollLeft
+					 * 	- 水平滚动条滚动的距离
+					 * scrollTop
+					 * 	- 垂直滚动条滚动的距离
+					 */
+					// alert(box4.scrollTop);
+					// alert(box4.scrollLeft);
+					
+					// scrollHeight - scrollTop == clientHeight
+					// 说明垂直滚动条滚到到底（阅读协议）
+					
+					// scrollWidth - scrollLeft == clientWidth
+					// 说明水平滚动条滚到到底
+					
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn01">click here</button>
+		<br /><br />
+		<div id="box4">
+			<div id="box3"></div>
+		</div>
+		
+		<div id="box2">
+			<div id="box1"></div>
+		</div>
+		
+	</body>
+</html>
