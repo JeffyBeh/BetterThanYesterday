@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			
+			#box1{
+				width: 200px;
+				height: 200px;
+				background-color: yellow;
+			}
+		</style>
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				let box1 = document.getElementById("box1");
+				let btn01 = document.getElementById("btn01");
+				
+				// 获取元素样式
+				btn01.onclick = function(){
+					/**
+					 * 获取元素当前显示的样式
+					 * 	语法：元素.currentStyle.样式名
+					 * 
+					 * 注：只有ie支持该方法
+					 */
+					//alert(box1.currentStyle.width);
+					
+					/**
+					 * 其他浏览器中获取元素样式方法
+					 * 	getComputedStyle()
+					 * 		这个方法是window的方法
+					 * 
+					 *  注：该方法不支持ie8及一下
+					 * 参数：
+					 * 	第一个：需要获取样式的元素
+					 * 	第二个：伪元素（一般设置为null）
+					 * 返回值：
+					 * 	样式对象
+					 * 
+					 * 注：如果样式没有设置，则不是获取默认值，真实值
+					 * 	如：没有设置width值，则获取实际值，而不是auto
+					 */
+					
+					// let obj = window.getComputedStyle(box1, null);
+					
+					// alert(obj.width);
+					alert(getStyle(box1, "width"));
+					
+					/* 
+					 * currentStyle和getCumputedStyle()只能读取样式，不能修改 
+					 * 如果修改需要使用style
+					 */
+				}
+			}
+			
+			/**
+			 * 定义函数获取当前指定元素的样式
+			 * 参数：
+			 * 	obj 要获取样式元素
+			 * 	name 要获取的样式
+			 */
+			function getStyle(obj, name){
+				
+				// 区分ie8和其他浏览器
+				/**
+				 * getCumputedStyle是变量，如果不存在则报错
+				 * window.getCumputedStyle是属性，如果不存在则返回undefined
+				 */
+				if(window.getCumputedStyle){
+					return getComputedStyle(obj, null)[name];
+				}else{
+					return obj.currentStyle[name];
+				}
+				// 使用三目运算符
+				// return getComputedStyle(obj, null)[name] ? getComputedStyle(obj, null)[name] : obj.currentStyle[name]; 
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn01">click here</button>
+		<br/>
+		<br/>
+		<div id="box1"></div>
+	</body>
+</html>
