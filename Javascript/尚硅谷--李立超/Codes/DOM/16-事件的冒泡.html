@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#box1{
+				width: 200px;
+				height: 200px;
+				background-color: green;
+			}
+			#s1{
+				background-color: yellow;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				
+				/**
+				 * 事件的冒泡
+				 * 	- 事件的向上传导：当后代的事件被触发时，其祖先的相同事件也回被触发
+				 * 	- 在开发中，大部分情况冒泡都是有用的，如果不希望发生冒泡则可以通过事件对象取消冒泡
+				 * 
+				 */
+				// 为s1绑定单击响应函数
+				let s1 = document.getElementById("s1");
+				s1.onclick = function(event){
+					event = event || window.event;
+					alert("this is span");
+					
+					// 取消冒泡
+					// 将事件对象的cancelBubble设置为true
+					event.cancelBubble = true;
+				}
+				// 为box1绑定单击响应函数
+				let box1 = document.getElementById("box1");
+				box1.onclick = function(){
+					alert("this is div");
+				}
+				
+				document.body.onclick = function(){
+					alert("this is body");
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box1">
+			this is div
+			<span id="s1"> this is span</span>
+		</div>
+	</body>
+</html>

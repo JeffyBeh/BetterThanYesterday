@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				/**
+				 * 开启box1的绝对定位
+				 */
+				position: absolute;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			window.onload = function(){
+				
+				/**
+				 * div跟随鼠标移动
+				 */
+				let box1 = document.getElementById("box1");
+				document.onmousemove = function(event){
+					
+					event = event || window.event;
+					// 获取鼠标坐标
+					/**
+					 * clientX/clientY:
+					 * 	当前可见窗口的坐标：可见窗口的左上角永远事(0,0)点
+					 */
+					// let left = event.clientX;
+					// let top = event.clientY;
+					/**
+					 * pageX/pageY
+					 * 	获取鼠标相对于当前页面的坐标
+					 * 
+					 * 不兼容ie8
+					 */
+					// let left = event.pageX;
+					// let top = event.pageY;
+					
+					/**
+					 * 获取滚动条滚动距离
+					 * 	- chrome任务滚动条是body的
+					 *  - firefox等浏览器认为滚动条是html
+					 */
+					let st = document.body.scrollTop || document.documentElement.scrollTop;
+					let sl = document.body.scrollLeft || document.documentElement.scrollLeft;
+					let left = event.clientX + st;
+					let top = event.clientY + sl;
+					// 设置div坐标
+					/**
+					 * left/top
+					 * 	相对于整个界面的位置
+					 */
+					box1.style.left = left + "px";
+					box1.style.top = top + "px";
+					
+					
+				}
+			}
+			
+		</script>
+	</head>
+	<body height="2000px;">
+		<div id="box1"></div>
+	</body>
+</html>
