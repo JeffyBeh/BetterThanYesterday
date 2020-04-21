@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+			}
+			
+			#box2{
+				width: 100px;
+				height: 100px;
+				background-color: yellow;
+				position: absolute;
+				
+				top: 200px;
+				left: 200px;
+			}
+		</style>
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				var box1 = document.getElementById("box1");
+				
+				/**
+				 * 鼠标拖拽box1元素:
+				 * 	- 鼠标在box1元素上按下 onmousedown
+				 * 	- 鼠标移动 onmousemove
+				 * 	- 鼠标松开 onmouseup
+				 */
+				box1.onmousedown = function(){
+
+					document.onmousemove = function(event){
+						
+						event = event || window.event;
+						
+						var sl = document.body.scrollLeft || document.documentElement.scrollLeft;
+						var st = document.body.scrollTop || document.documentElement.scrollTop;
+						
+						var x = event.clientX + sl;
+						var y = event.clientY + st;
+						
+						box1.style.left = x + "px";
+						box1.style.top = y + "px";			
+					}
+					
+					// onmouseup绑定给box1时，如果鼠标在其他元素之上，则事件无法响应，故绑定给document
+					document.onmouseup = function(event){
+						
+						// 取消document的onmousemove事件
+						document.onmousemove = null;
+						
+						// onmouseup为了取消onmousemove，取消onmousemove后应该将onmouseup取消
+						document.onmouseup = null;
+						alert(1);
+					}
+				}
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div id="box1"></div>
+		<div id="box2"></div>
+	</body>
+</html>

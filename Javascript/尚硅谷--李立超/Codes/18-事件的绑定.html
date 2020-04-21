@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			window.onload = function(){
+				
+				var btn01 = document.getElementById("btn01");
+				
+				/**
+				 * 通过对象.事件，绑定多个事件时，只执行最后一个
+				 */
+				/* btn01.onclick = function(){
+					alert(1);
+				}
+				
+				btn01.onclick = function(){
+					alert(2);
+				} */
+				
+				/**
+				 * 可以通过addEventListener绑定多个事件
+				 * 	参数
+				 * 	- 事件字符串，不带on
+				 * 	- 回调函数
+				 *  - 执行期间是否捕获其他事件，布尔值，一般为false
+				 * 
+				 * 执行顺序：按添加顺序执行
+				 * 兼容性：不支持IE8-
+				 */
+				/* btn01.addEventListener("click", function(){
+					alert(1);
+				}, false);
+				
+				btn01.addEventListener("click", function(){
+					alert(2);
+				}, false);
+				
+				btn01.addEventListener("click", function(){
+					alert(3);
+				}, false); */
+				
+				/**
+				 * IE8- 可以通过attachEvent绑定事件
+				 *  参数
+				 *   - 事件的字符串，带on
+				 *   - 回调函数
+				 * 
+				 * 执行顺序：后进先出
+				 */
+				/* btn01.attachEvent("onclick", function(){
+					alert(1);
+				});
+				
+				btn01.attachEvent("onclick", function(){
+					alert(2);
+				});
+				
+				btn01.attachEvent("onclick", function(){
+					alert(3);
+				}); */
+				/**
+				 * addEventListerner()中的的this为绑定事件的对象
+				 * attachEvent()的this为window
+				 */
+				/* btn01.addEventListener("click", function(){
+					alert(this);
+				}, false);
+				
+				btn01.attachEvent("onclick", function(){
+					alert(this);
+				}); */
+				
+				
+				bind(btn01, "click", function(){
+					alert(this);
+				});
+				// bind(btn01, "click", function(){
+				// 	alert(2);
+				// });
+				// bind(btn01, "click", function(){
+				// 	alert(3);
+				// });
+				// 解决兼容问题，定义一个函数
+				/**
+				 * 参数：
+				 *  - obj，要绑定的对象
+				 *  - eventStr，事件的字符串
+				 *  - callBack, 回调函数
+				 */
+				function bind(obj, eventStr, callBack){
+					
+					// 通过判断方法是否存在来确定使用哪个方法
+					if(obj.addEventListener){
+						obj.addEventListener(eventStr, callBack, false);
+					} else if(obj.attachEvent){
+						
+						/**
+						 * this的取值由调用方式决定
+						 *  - callback.call(obj) 修改函数的this
+						 */
+						obj.attachEvent("on"+eventStr, function(){
+							// 在匿名函数中调用回调函数，指定this
+							callBack.call(obj);
+						});
+					}
+					
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn01">click here</button>
+	</body>
+</html>
