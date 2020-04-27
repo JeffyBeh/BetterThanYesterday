@@ -25,30 +25,36 @@
 			
 			window.onload = function(){
 				var box1 = document.getElementById("box1");
+				var box2 = document.getElementById("box2");
+				drag(box1);
+				drag(box2);
 				
+			}
+			
+			function drag(obj){
 				/**
-				 * 鼠标拖拽box1元素:
-				 * 	- 鼠标在box1元素上按下 onmousedown
+				 * 鼠标拖拽obj元素:
+				 * 	- 鼠标在obj元素上按下 onmousedown
 				 * 	- 鼠标移动 onmousemove
 				 * 	- 鼠标松开 onmouseup
 				 */
-				box1.onmousedown = function(event){
-
+				obj.onmousedown = function(event){
+				
 					// 捕获鼠标操作
 					/**
 					 * setCapture()只有IE8-支持
 					 * 	- 在firefox中不报错，在chrome中报错
 					 */
-					/* if(box1.setCapture){
-						box1.setCapture();
+					/* if(obj.setCapture){
+						obj.setCapture();
 					} */
-					box1.setCapture && box1.setCapture();
+					obj.setCapture && obj.setCapture();
 					
 					// div的水平偏移量：mouse.eventX - div.offsetLeft
 					// div的垂直偏移量：mouse.eventY - div.offsetTop
 					event = event || window.event;
-					var ol = event.clientX - box1.offsetLeft;
-					var ot = event.clientY - box1.offsetTop;
+					var ol = event.clientX - obj.offsetLeft;
+					var ot = event.clientY - obj.offsetTop;
 					
 					document.onmousemove = function(event){
 						
@@ -61,11 +67,11 @@
 						var x = event.clientX + sl - ol;
 						var y = event.clientY + st - ot;
 						
-						box1.style.left = x + "px";
-						box1.style.top = y + "px";			
+						obj.style.left = x + "px";
+						obj.style.top = y + "px";			
 					}
 					
-					// onmouseup绑定给box1时，如果鼠标在其他元素之上，则事件无法响应，故绑定给document
+					// onmouseup绑定给obj时，如果鼠标在其他元素之上，则事件无法响应，故绑定给document
 					document.onmouseup = function(event){
 						
 						// 取消document的onmousemove事件
@@ -75,7 +81,7 @@
 						document.onmouseup = null;
 						
 						// 取消对鼠标的捕获(IE8-)
-						box1.releaseCapture && box1.release();
+						obj.releaseCapture && obj.release();
 					}
 					
 					/**
