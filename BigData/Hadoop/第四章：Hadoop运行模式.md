@@ -175,7 +175,6 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
       <value>yarn</value>
   </property>
   
-  
   <!-- 这是3.2以上版本需要增加配置的，不配置运行mapreduce任务可能会有问题，记得使用自己的路径 -->
   <property>
       <name>mapreduce.application.classpath</name>
@@ -232,3 +231,61 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
 > <!-- sbin/mr-jobhistory-daemon.sh start historyserver -->
 >
 > mapred --daemon start historyserver
+
+#### 4.2.4 配置日志的聚集
+
+日志聚集的概念：应用运行完成以后，将程序运行日志信息上传到HDFS系统上。
+
+日志聚集功能好处：可以方便的查看到程序运行详情，方便开发调试
+
+<font color="red">注意：开启日志聚集功能，需要重新启动NodeManeger、ResourceManager 和HistoryManager</font>
+
+* 配置：yarn-site.xml
+
+  ```xml
+  <!-- 日志聚集功能使能 -->
+  <property>
+  	<name>yarn.log-aggregation-enable</name>
+      <value>true</value>
+  </property>
+  
+  <!-- 日志保留时间设置为7天 -->
+  <property>
+  	<name>yarn.log-aggregation.retain-seconds</name>
+      <value>604800</value>
+  </property>
+  ```
+
+#### 4.2.5 配置文件说明
+
+​	Hadoop配置文件分为两类：默认配置文件和自定义配置文件，只有用户想要修改某一默认配置值时，才需要修改自定义配置文件，改相应的属性值
+
+* 默认配置文件
+
+  | 需要获取的默认文件 | 文件存放在Hadoop的jar包的位置                            |
+  | ------------------ | -------------------------------------------------------- |
+  | core-default.xml   | hadoop-common-3.2.1.jar/core-default.xml                 |
+  | hdfs-default.xml   | hadoop-hdfs-3.2.1.jar/hdfs-default.xml                   |
+  | yarn-default.xml   | hadoop-yarn-common.3.2.1.jar/yarn-default.xml            |
+  | mapred-default.xml | hdoop-mapreduce-client-core-3.2.1.jar/mapred-default.xml |
+
+* 自定义配置文件
+
+  core-site.xml、hdfs-site.xml、yarn-site.xml、mapred-site.xml四个配置文件放在$HADOOP_HOME/etc/hadoop这个路径上，用户可以根据项目需求重新进行修改配置
+
+### 4.3 完全分布式运行模式（开发重点）
+
+分析：
+
+1. 准备3台客户机（关闭防火墙、静态ip、主机名称）
+2. 安装JDK
+3. 配置环境变量
+4. 安装Hadoop
+5. 配置环境变量
+6. 配置集群
+7. 单点启动
+8. 配置ssh
+9. 群起并测试集群
+
+#### 4.3.1 虚拟机准备
+
