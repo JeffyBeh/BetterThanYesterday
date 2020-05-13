@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			
+			#box1{
+				width:100px;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				/**
+				 * 当鼠标在box1上滚轮向下滚动时box1变长，反之变短
+				 */
+				var box1 = document.getElementById("box1");
+				
+				// box1 绑定滚轮滚动事件
+				/**
+				 * onmousewhell鼠标滚轮滚动事件，在滚轮滚动时触发
+				 * 	不兼容firefox
+				 * 在Firefox中需要使用DOMMouseScroll来绑定事件
+				 * 	注意：该事件需要通过addEventListener()函数来绑定
+				 */
+				box1.onmousewheel = function(event){
+					
+					// 判断滚轮滚动方向
+					// event.whellDelta可以获取滚轮滚动方向，向上为正，向下为负（不看大小）
+					// 不兼容Firefox
+					event = event || window.event;
+					// alert(event.wheelDelta);
+					
+					// Firefox判断滚轮滚动方向, 向上为负，向下为正
+					// alert(event.detail);
+					
+					if(event.wheelDelta > 0 || event.detail < 0){
+						// 向上滚动，box1变短
+						
+						box1.style.height = box1.clientHeight - 10 + "px";
+					} else{
+						// 向下滚动，box1变长
+						box1.style.height = box1.clientHeight + 10 + "px";
+					}
+					
+					
+					/**
+					 * 使用addEventListener()方法绑定的响应函数，取消默认行为时不能使用return false
+					 * 需要使用event来取消默认行为
+					 * 
+					 * 不兼容IE8-
+					 */
+					event.preventDefault && event.preventDefault();
+					/**
+					 * 当滚轮滚动时，如果浏览器有滚动条，滚动条就会随之不滚动，
+					 * 这是浏览器的默认行为，如果不希望发生，则可以取消默认行为
+					 */
+					return false;
+				}
+				
+				// 为Firefox绑定滚轮事件
+				bind(box1, "DOMMouseScroll", box1.onmousewheel);
+				
+				function bind(obj, eventStr, callBack){
+					
+					// 通过判断方法是否存在来确定使用哪个方法
+					if(obj.addEventListener){
+						obj.addEventListener(eventStr, callBack, false);
+					} else if(obj.attachEvent){
+						
+						/**
+						 * this的取值由调用方式决定
+						 *  - callback.call(obj) 修改函数的this
+						 */
+						obj.attachEvent("on"+eventStr, function(){
+							// 在匿名函数中调用回调函数，指定this
+							callBack.call(obj);
+						});
+					}
+					
+				}
+			}
+		</script>
+	</head>
+	<body style="height: 2000px;">
+		<div id="box1"></div>
+	</body>
+</html>
