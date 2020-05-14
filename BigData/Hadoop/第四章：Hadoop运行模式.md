@@ -289,3 +289,113 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
 
 #### 4.3.1 虚拟机准备
 
+#### 4.3.2 编写集群分发脚本xsync
+
+1. scp(secure copy) 安全拷贝
+
+   1. scp定义
+
+      ​	scp可以实现服务器与服务器之间的数据拷贝(from server1 to server2)
+
+   2. 基本语法
+
+      ​	scp		-r		$pdir/$fname					$user@hadoop$host:$pdir/$fanme
+
+      ​	命令		递归	要拷贝的文件路径/名称	目的用户@主机：目的路径/名称
+
+   3. 案例操作
+
+      a. 在hadoop101上，将hadoop101中/opt/module目录下的软件拷贝到hadoop102上
+
+      >[jeffy@hadoop101	/]$scp -r /opt/module root@hadoop102:/opt/module
+
+      b. 在hadoop103上，将将hadoop101中/opt/module目录下的软件拷贝到hadoop103上
+
+      > [jeffy@hadoop101	opt]$sudo scp -r jeffy@hadoop101:/opt/module root@hadoop103:/opt/module
+
+2. rsync 远程同步工具
+
+   ​	rsync主要用于备份和镜像。具有快速、避免复制相同内容和支持符号链接的优点。
+
+   <font color="red">rsync和scp区别：</font>用rsync做文件的复制要比scp的速度快，rsync只对差异文件做更新。scp是把所有文件都复制过去。
+
+   a. 基本语法
+
+   ​	rsycn		-rvl			$pdir/$fname			$user@$host:$pdir/$fname
+
+   ​	命令		参数			要拷贝的文件路径/名称	目的用户@主机:目的路径/名称
+
+   ​	选项参数说明
+
+   | 选项 | 功能         |
+   | ---- | ------------ |
+| -r   | 递归         |
+   | -v   | 显示复制过程 |
+   | -l   | 拷贝符号链接 |
+   
+   ​	b. 案例实操
+   
+   ​		把hadoop101机器上的/opt/package目录同步到hadoop102服务器的root用户下的/opt/目录
+   
+   >[jeffy@hadoop-101	/]$rsync -rvl /opt/package root@hadoop102:/opt/package
+   
+3. xsync集群分发脚本
+
+   需求：循环复制文件到所有节点的相同目录下。
+
+   需求分析：
+
+   ​	a. rsync命令原始拷贝
+
+   ​		rsync -rvl /opt/module root@hadoop103:/opt
+
+   ​	b. 期望脚本
+
+   ​		xsync要同步的文件名称
+
+   ​	c. <font color="red">说明：</font>在/home/jeffy/bin这个目录下存放的脚本，jeffy用户可以在系统任何地方直接执行
+
+   脚本实现
+
+   mkdir bin  -> cd bin/ -> touch xsync -> vim xsync
+
+   ```bash
+   #!/bin/bash
+   #1 获取输入参数个数，如果没有参数，直接退出
+   pcount=$#
+   if((pcount==0));then
+   echo no args;
+   exit;
+   fi
+   
+   #2 获取文件名称
+   p1=$1
+   fname=`basename $p1`
+   echo fname=$fname
+   
+   #3 获取上级目录的绝对路径
+   pdir=`cd -P ${dirname $p1}; pwd`
+   echo pdir=$pdir
+   
+   #4 获取当前用户名称
+   user=`whoami`
+   
+   #5 循环
+   for((host=101; host<104; host++)); do
+   	echo ----------------------hadoop$host---------------
+   	rsync -rvl $pdir/$fname $user@hadoop-$host:$pdir
+   done
+   ```
+
+   ​	d. 修改脚本xsync具有可执行权限
+
+   ​	chmod 777 xsync
+
+   ​	e. 调试脚本形式 xsync 文件名称
+
+   ​	xsync /home/jeffy/bin
+
+   ​	<font color="red">说明：</font>如果将xsync放到/home/jeffy/bin目录下仍然不能实现全局使用，可以将xsync移动到/usr/local/bin目录下
+
+   
+
