@@ -374,7 +374,7 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
    echo fname=$fname
    
    #3 获取上级目录的绝对路径
-   pdir=`cd -P ${dirname $p1}; pwd`
+   pdir=`cd -P $(dirname $p1); pwd`
    echo pdir=$pdir
    
    #4 获取当前用户名称
@@ -397,5 +397,104 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
 
    ​	<font color="red">说明：</font>如果将xsync放到/home/jeffy/bin目录下仍然不能实现全局使用，可以将xsync移动到/usr/local/bin目录下
 
-   
+#### 4.3.3 集群配置
 
+* 集群部署规划
+
+  |      | hadoop101              | hadoop102                        | hadoop103                       |
+  | ---- | ---------------------- | -------------------------------- | ------------------------------- |
+  | HDFS | NameNode<br />DataNode | DataNode                         | SecondaryNameNode<br />DataNode |
+  | YARN | NodeManager            | ResourceManager<br />NodeManager | NodeManager                     |
+
+* 配置集群
+
+  * 核心配置文件
+
+    配置：core-site.xml
+
+    ```bash
+    <configuration>
+    	<!-- 指定HDFS中的NameNode的地址 -->
+        <property>
+        	<name>fs.defaultFS</name>
+            <value>hdfs://hadoop-101:9000</value>
+        </property>
+    
+    	<!-- 指定Hadoop运行时产生文件的存储目录 -->
+        <property>
+        	<name>hadoop.tmp.dir</name>
+        	<value>/opt/module/hadoop3.2.1/data/tmp</value>
+        </property>
+    </configuration>
+    
+    ```
+
+  * 配置：hadoop-env.sh -- JAVA_HOME
+
+  * 配置：hdfs-site.xml
+
+    ```bash
+    <configuration>
+            <!-- 设置副本数量(默认为3) -->
+            <property>
+                    <name>dfs.replication</name>
+                    <value>3</value>
+            </property>
+            
+    		<!-- 指定Hadoop辅助名称节点主机配置 -->
+    		<property>
+    			<name>dfs.namenode.secondary.http-address</name>
+    			<value>hadoop-103:50090</value>
+    </configuration>
+    ```
+
+  - 配置：yarn-env.sh -- JAVA_HOME(3中无需配置)
+
+  - 配置：yarn-site.xml
+
+    ```bash
+    <!-- Reducer 获取数据的方式 -->
+    <property>
+    	<name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <!-- 执行YARN的ResourceManager的地址 -->
+    <property>
+    	<name>yarn.resourcemanager.hostname</name>
+        <value>hadoop-102</value>
+    </property>
+    ```
+
+  - 配置：mapred-env.sh  -- JAVA_HOME(3中无需配置)
+
+  - 配置：mapred-site.xml
+
+    ```bash
+    <configuration>
+    	<!-- 指定MR运行在YARN上 -->
+    	<property>
+    		<name>mapreduce.framework.name</name>
+    		<value>yarn</value>
+    	</property>
+    	<!-- hadoop3中需要配置 -->
+    	<property>
+    		<name>mapreduce.application.classpath</name>
+    		<value>
+    			/opt/module/hadoop-3.2.1/etc/hadoop,
+    			/opt/module/hadoop-3.2.1/share/hadoop/common/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/common/lib/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/hdfs/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/hdfs/lib/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/mapreduce/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/mapreduce/lib/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/yarn/*,
+    			/opt/module/hadoop-3.2.1/share/hadoop/yarn/lib/*
+    		</value>
+    	</property>
+    </configuration>
+    
+    ```
+
+  #### 4.4.4 单点启动
+
+  初始化之前删除 data/ 和 logs/
