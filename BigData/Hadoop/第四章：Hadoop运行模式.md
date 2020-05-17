@@ -399,7 +399,7 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
 
 #### 4.3.3 集群配置
 
-* 集群部署规划
+* <span id="plan">集群部署规划</span>
 
   |      | hadoop101              | hadoop102                        | hadoop103                       |
   | ---- | ---------------------- | -------------------------------- | ------------------------------- |
@@ -495,6 +495,103 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     
     ```
 
-  #### 4.4.4 单点启动
+  #### 4.3.4 单点启动
 
   初始化之前删除 data/ 和 logs/
+
+  #### 4.3.5 SSH无密码登录配置
+
+  * 配置ssh
+    1. 基本语法：ssh ip
+  * ssh连接时出现Host key verification failed的解决办法
+
+  - 免密登录原理
+
+    ![免密登陆原理](.\res\免密登陆原理.png)
+
+  - 生成公钥和私钥
+
+    > ssh-keygen -t rsa
+
+  * 将公钥拷贝到免密登录的目标机器上
+
+    > ssh-copy-id targetIP
+    >
+    > 注：本机中也需要拷贝公钥生成authorized_keys文件
+
+  * <font color="red">配置说明</font>
+    1. 101（NameNode）jeffy和root用户都配置免密登录到101、102、103
+    2. 102（ResourceManager）中的jeffy用户配置免密登录到101、102、103
+
+  * .ssh文件夹下（~/.ssh）的文件功能解释
+
+    |                 |                                            |
+    | --------------- | ------------------------------------------ |
+    | known_host      | 记录ssh访问过的计算机的公钥（publish-key） |
+    | id_rsa          | 私钥                                       |
+    | id_rsa.pub      | 公钥                                       |
+    | authorized_keys | 存放授权过的无密码登录的服务器的公钥       |
+
+  #### 4.3.6 群起集群
+
+  - 配置：workers(3)/slavbes(2) -- 同步配置到其他节点
+
+    > hadoop-101
+    >
+    > hadoop-102
+    >
+    > hadoop-103
+
+  * sbin/start-hdfs.sh(在101(NameNode)中启动)
+
+  * sbin/start-yarn.sh(在102(ResourceManager)中启动)
+
+  * [集群部署规划](#plan)
+
+  * 集群测试
+
+    上传小文件
+
+    > hdfs dfs -mkdir -p /usr/jeffy/input(创建文件夹)
+    >
+    > bin/hdfs dfs -put wcinput/wc.input /(上传小文件)
+
+    上传大文件
+
+    > bin/hdfs dfs -put /opt/package/hadoop-3.2.1.tar.gz /usr/jeffy/input
+
+  * 文件存储路径
+
+    >/opt/module/hadoop-3.2.1/data/tmp/dfs/data/current/BP-1799783940-192.168.93.101-1589628157697/current/finalized/subdir0/subdir0
+
+  - 分块拼接后恢复文件
+
+    > cat blk_1073741826 >> tmp.txt
+    >
+    > cat blk_1073741827 >> tmp.txt
+    >
+    > cat blk_1073741828 >> tmp.txt(上传的hadoop-3.2.1.tar.gz的三个块)
+    >
+    > tar zxvf tmp.txt
+
+  #### 4.3.7 集群启动/停止方式总结
+
+  * 各个服务组逐一启动/停止
+
+    > 分别启动/停止HDFS组件
+    >
+    > hadoop-daemon.sh start/stop namenode/datanode/secondearynamenode
+    >
+    > 启动/停止YARN
+    >
+    > yarn-daemon.sh start/stop resourcemanager/nodemanager
+
+  - 各个模块分开启动/停止（需要配置SSH）<font color='red'>常用</font>
+
+    > 整体启动/停止HDFS
+    >
+    > start-dfs.sh /stop-dfs.sh
+    >
+    > 整体启动/停止YARN
+    >
+    > start-yarn.sh /stop-yarn.sh
