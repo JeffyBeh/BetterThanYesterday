@@ -596,7 +596,7 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     >
     > start-yarn.sh /stop-yarn.sh
 
-  #### 4.3.8 集群时间同步 (使用chrony)
+  #### 4.3.8 集群时间同步
 
   ##### 4.3.8.1 chrony配置集群同步时间
 
@@ -770,3 +770,54 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     >
     > 注：一般可以自动同步
 
+##### 4.3.8.2 ntp配置集群同步时间
+
+###### 1. 服务端
+
+1. 查看安装情况
+
+   > rpm -qa |grep ntp
+
+2. 修改ntp配置文件
+
+   > /etc/ntp.conf
+   >
+   > \# 1.添加网段
+   >
+   > restrict 192.168.93.101 mask 255.255.255.0 nomodify notrap
+   >
+   > \# 2. 服务端取消网络服务器(不使用网络服务器)
+   >
+   > \# 3. 当服务器节点失去网络连接后，使用本机时间作为服务器时间供其他节点同步时间
+   >
+   > server 192.168.93.0 
+   >
+   > fudge 192.168.93.0 stratum 10
+
+3. 修改/etc/sysconfig/ntpd文件
+
+   > \# 让硬件时间与系统时间一起同步
+   >
+   > SYNC_HWCLOCK=yes
+
+4. 操作ntp服务
+
+   > \# 查看服务状态
+   >
+   > service ntpd status
+   >
+   > \# 启动ntp服务
+   >
+   > service ntpd start
+   >
+   > \# 开机启动
+   >
+   > chkconfig ntpd on=
+
+###### 2. 客户端
+
+1. 增加定时任务
+
+   > crontab -e
+   >
+   > \*/1 \*  \*  \*  \*  \usr\sbin\ntpdate hadoop101
