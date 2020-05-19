@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			/**
+			 * History
+			 * 	- 对象可以操作浏览器向前向后翻页
+			 */
+			
+			/**
+			 * length -- 获取当前访问链接的数量（访问多少页面）
+			 */
+			// alert(history.length);
+			
+			window.onload = function(){
+				
+				var btn = document.getElementById("btn");
+				
+				btn.onclick = function(){
+					
+					/**
+					 * back()
+					 * 	- 用来回退到上一个页面
+					 * 	- 作用：和浏览器的回退按钮一样
+					 */
+					// history.back();
+					
+					/**
+					 * forward()
+					 * 	- 跳转到下一个页面
+					 * 	- 和浏览器的前进按钮一样
+					 */
+					// history.forward();
+					
+					/**
+					 * go()
+					 * 	- 用来跳转到指定页面
+					 * 	- 参数：整数
+					 * 		1/2 表示向前跳转1/2个页面
+					 * 		-1/-2 向后跳转1/2个页面
+					 */
+				};
+			};
+		</script>
+	</head>
+	<body>
+		
+		<button id="btn"> click here </button>
+		<h1>History</h1>
+		<a href="test01.html">go to Test01</a>
+	</body>
+</html>
