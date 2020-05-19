@@ -595,3 +595,178 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     > 整体启动/停止YARN
     >
     > start-yarn.sh /stop-yarn.sh
+
+  #### 4.3.8 集群时间同步 (使用chrony)
+
+  ##### 4.3.8.1 chrony配置集群同步时间
+
+  - 查看chrony信息
+
+    > rpm -qi chrony
+
+  - 安装chrony
+
+    > yum/dnf install -y chrony
+
+  - 设置
+
+    > 开机启动/停止：systemctl enable/disable (-now) chrony   -- -now 参数可以直接启动
+    >
+    > 启动/重启/停止：systemctl start/restart/stop chronyd
+
+    
+
+  - 在防火墙内放行，因NTP使用123/UDP端口协议，所以允许NTP服务即可(关闭防火墙可以不设置)
+
+    > firewall-cmd --add-service=ntp --permanent
+    >
+    > firewall-cmd --reload
+
+  - 设置时区
+
+    > 查看时间详情
+    >
+    > [root@hadoop-101 jeffy]# timedatectl
+    >                Local time: Tue 2020-05-19 17:17:53 CST
+    >            Universal time: Tue 2020-05-19 09:17:53 UTC
+    >                  RTC time: Tue 2020-05-19 09:17:53
+    >                 Time zone: Asia/Shanghai (CST, +0800)
+    > System clock synchronized: yes
+    >               NTP service: active
+    >           RTC in local TZ: no
+    >
+    > <font color="red">注：</font>System clock synchronized: yes/no 表示时间是否同步
+    >
+    > 设置时区（正确可忽略）
+    >
+    > 查看可用时区
+    >
+    > > timedatectl list-timezones
+    >
+    > 筛选上海时区
+    >
+    > > timedatectl list-timezones | grep -E "Asia/S.*"
+    >
+    > 设置时区
+    >
+    > > timedatectl set-timezons Asia/Shanghai
+    >
+    > 强制同步时间
+    >
+    > > $ chronyc -a make step
+    > >
+    > > 200 OK
+    >
+    > 设置时间
+    >
+    > > timedatectl set-time "YYYY-MM-DD HH:mm:ss"
+    > >
+    > > date -s "YYYY-MM-DD HH:mm:ss"
+
+    
+
+  - 配置：/etc/chrony.cong
+
+    ```bash
+    # 使用pool.ntp.org项目中的公共服务器。以server开，理论上你想添加多少时间服务器都可以。
+    # Please consider joining the pool (http://www.pool.ntp.org/join.html).
+    server 0.centos.pool.ntp.org iburst
+    server 1.centos.pool.ntp.org iburst
+    server 2.centos.pool.ntp.org iburst
+    server 3.centos.pool.ntp.org iburst
+     
+    # 根据实际时间计算出服务器增减时间的比率，然后记录到一个文件中，在系统重启后为系统做出最佳时间补偿调整。
+    driftfile /var/lib/chrony/drift
+     
+    # chronyd根据需求减慢或加速时间调整，
+    # 在某些情况下系统时钟可能漂移过快，导致时间调整用时过长。
+    # 该指令强制chronyd调整时期，大于某个阀值时步进调整系统时钟。
+    # 只有在因chronyd启动时间超过指定的限制时（可使用负值来禁用限制）没有更多时钟更新时才生效。
+    makestep 1.0 3
+     
+    # 将启用一个内核模式，在该模式中，系统时间每11分钟会拷贝到实时时钟（RTC）。
+    rtcsync
+     
+    # Enable hardware timestamping on all interfaces that support it.
+    # 通过使用hwtimestamp指令启用硬件时间戳
+    #hwtimestamp eth0
+    #hwtimestamp eth1
+    #hwtimestamp *
+     
+    # Increase the minimum number of selectable sources required to adjust
+    # the system clock.
+    #minsources 2
+     
+    # 指定一台主机、子网，或者网络以允许或拒绝NTP连接到扮演时钟服务器的机器
+    #allow 192.168.0.0/16
+    #deny 192.168/16
+     
+    # Serve time even if not synchronized to a time source.
+    local stratum 10
+     
+    # 指定包含NTP验证密钥的文件。
+    #keyfile /etc/chrony.keys
+     
+    # 指定日志文件的目录。
+    logdir /var/log/chrony
+     
+    # Select which information is logged.
+    #log measurements statistics tracking
+    ```
+
+    > 服务端 -- 192.168.93.101
+    >
+    > 配置ntp服务端
+    >
+    > #阿里云服务
+    >
+    > server ntp1.aliyun.com iburst
+    >
+    > #本机
+    >
+    > #server 192.168.93.101 iburst
+    >
+    > #配置允许访问服务端的客户端
+    >
+    > allow 192.168.93.0/24
+    >
+    > 
+    >
+    > 客户端 -- 192.168.93.102等
+    >
+    > 配置ntp服务端
+    >
+    > server 192.168.93.101 iburst
+
+  - 配置完成，重启chronyd服务
+
+  - 启动NTP时间同步
+
+    > timedatectl set-ntp yes/true/1  //no/false/0
+
+  - 其他
+
+    > 查看服务端状态
+    >
+    > chronyc sources (-v 查看详细信息)
+    >
+    > 查看客户端
+    >
+    > chronyc clients
+    >
+    > 状态跟踪
+    >
+    > chrongyc tracking
+
+  - 手动同步
+
+    >ntpdate 192.168.93.101
+
+  - 定时任务
+
+    > crontab -e
+    >
+    > > */2 * * * * /usr/sbin/ntpdate 192.168.93.101  -->>创建脚本每个2分钟来同步时间一次
+    >
+    > 注：一般可以自动同步
+
