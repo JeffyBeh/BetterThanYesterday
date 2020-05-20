@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				var count = document.getElementById("count");
+				
+				// 使count中的内容自动切换
+				// count.innerHTML = 2;
+				/**
+				 * 使用定时调用增加时间间隔
+				 * 
+				 * setInterval()
+				 * 	- 定时调用
+				 *  - 可以将一个函数，每隔一段时间被调用一次
+				 * 	- 参数
+				 * 		1. 回调函数，该函数会每隔一段时间被调用一次
+				 * 		2. 每次调用的时间间隔，单位是ms
+				 * 
+				 * 	- 返回值：
+				 * 		number：作为定时器的唯一标识
+				 */
+				
+				var num = 0;
+				var timer = setInterval(function(){
+					count.innerHTML = num++;
+					
+					if(num == 10){
+						clearInterval(timer);
+					}
+				}, 1000);
+				
+				/**
+				 * clearInterval()
+				 * 	- 关闭定时器
+				 * 	- 参数
+				 * 		定时器标识（返回值）
+				 */
+			};
+		</script>
+	</head>
+	<body>
+		<h1 id="count"></h1>
+	</body>
+</html>
