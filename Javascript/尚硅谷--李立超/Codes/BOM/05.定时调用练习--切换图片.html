@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			#outter{
+				width: 800px;
+				background-color: #9ACD32;
+				margin: 50px auto;
+				text-align: center;
+				padding: 10px;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				
+				var imgArr = ["../DOM/IMG/01.jpg", "../DOM/IMG/02.jpg", "../DOM/IMG/03.jpg", "../DOM/IMG/04.jpg"];
+				
+				var img = document.getElementById("changeImg");
+				
+				var sbtn = document.getElementById("startBtn");
+				var bbtn = document.getElementById("breakBtn");
+				
+				var index = 0;
+				var timer;
+				
+				sbtn.onclick = function(){
+					
+					// 开启定时器之前关闭当前元素的其他定时器
+					clearInterval(timer);
+					
+					timer = setInterval(function(){
+						img.src = imgArr[index++ % imgArr.length];
+					}, 1000);
+				};
+				
+				bbtn.onclick = function(){
+					// clearInterval 可以接受任意参数，如果参数无效则什么都不做
+					clearInterval(timer);
+				};			
+			};
+		</script>
+	</head>
+	<body>
+		<div id="outter">
+			<img id="changeImg" style="width: 800px; height: 500px;" src="../DOM/IMG/01.jpg" alt="Unknow Error"/>
+			<button id="startBtn">Start</button>
+			<button id="breakBtn">Terminate</button>
+		</div>		
+	</body>
+</html>
