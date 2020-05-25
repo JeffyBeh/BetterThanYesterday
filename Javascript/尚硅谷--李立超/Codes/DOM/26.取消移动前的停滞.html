@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+			}
+		</style>
+		<script type="text/javascript">
+			
+			window.onload = function(){
+				
+				var box1 = document.getElementById("box1");
+			
+			
+				// 创建变量表示方向
+				// 通过修改dir修改移动方向
+				var dir = 0;
+				// 速度
+				var speed = 10;
+				var left = box1.offsetLeft;
+				var top = box1.offsetTop;
+				
+				// 开启定时器，控制div移动
+				setInterval(function(){
+					if(dir === 37){
+						
+						left = left > speed ? left - speed : 0;
+						console.log(left);
+						box1.style.left = left + "px";
+					} else if(dir === 38){
+						
+						top = top > speed ? top - speed : 0;
+						console.log(top);
+						box1.style.top = top + "px";
+					} else if(dir === 39){
+						
+						left += speed;
+						console.log(left);
+						box1.style.left = left + "px";
+					} else if(dir === 40){
+						
+						top += speed;
+						console.log(top);
+						box1.style.top = top + "px";
+					}
+				}, 10);
+				
+				document.onkeydown = function(event){
+					
+					
+					event = event || window.event;
+					
+					
+					
+					// 按下ctrl键加速
+					if(event.ctrlKey){
+						speed = 50;
+					}
+					/**
+					 * left 37
+					 * up 38
+					 * right 39
+					 * down 40
+					 * 
+					 * 第一次移动时，仍会有明显的小卡顿
+					 */ 
+					
+					// 使dir=按键值
+					dir = event.keyCode;
+					
+					// 当按键松开时，div不在移动
+					document.onkeyup = function(){
+						dir = -1;
+						speed = 10;
+					};
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div id="box1"></div>
+	</body>
+</html>
