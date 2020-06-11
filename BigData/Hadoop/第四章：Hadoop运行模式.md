@@ -77,6 +77,8 @@ cd /opt/module/hadoop.*/etc/hadoop
 - 启动DataNode
 
   > sbin/hadoop-daemon.sh start datanode
+  >
+  > hdfs --daemon start datanode
 
 * 访问ip:50070
 
