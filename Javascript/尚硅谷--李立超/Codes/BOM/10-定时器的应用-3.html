@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				// ie8 在没有指定值默认情况为auto,其他为0px
+				left: 0px;
+			}	
+			#box2{
+				width: 100px;
+				height: 100px;
+				background-color: yellow;
+				position: absolute;
+				// ie8 在没有指定值默认情况为auto,其他为0px
+				left: 0px;
+				top: 200px;
+			}
+		</style>
+		
+		<script type="text/javascript" src="./js/tools.js"></script>
+		
+		<script type="text/javascript" >
+	
+			window.onload = function(){
+				
+				var btn01 = document.getElementById("btn01");
+				var btn02 = document.getElementById("btn02");
+				var btn03 = document.getElementById("btn03");
+				var btn04 = document.getElementById("btn04");
+				
+				var box1 = document.getElementById("box1")
+				var box2 = document.getElementById("box2")
+				
+				
+				btn01.onclick = function(){
+					move(box1, "left", 1, 800);
+				};
+				
+				btn02.onclick = function(){
+					move(box1, "left", 1, 0);
+				};
+				
+				btn03.onclick = function(){
+					move(box2, "left", 1, 800);
+				};
+				
+				btn04.onclick = function(){
+					move(box2, "width", 1, 800, function(){
+						move(box2, "top", 1, 50, function(){
+							move(box2, "height", 1, 500, function(){
+								move(box2, "left", 1, 0);
+							});
+						});
+					});
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<button id="btn01">点击按钮，div01自动右移</button>
+		<button id="btn02">点击按钮，div01自动左移</button>
+		<button id="btn03">点击按钮，div02自动右移</button>
+		<button id="btn04">修改box2样式变化</button>
+		<br />
+		<br />
+		<div id="box1"></div>
+		<div id="box2"></div>
+		
+		<div style="width: 0px; height: 1000px; top: 0; border: 1px red solid; position: absolute; border-left: 1px; left: 800px;"></div>
+	</body>
+</html>

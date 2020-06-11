@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				// ie8 在没有指定值默认情况为auto,其他为0px
+				left: 0px;
+			}
+		</style>
+		<script type="text/javascript">
+	
+			window.onload = function(){
+				
+				var btn01 = document.getElementById("btn01");
+				
+				var box1 = document.getElementById("box1")
+				
+				var timer;
+				btn01.onclick = function(){
+					
+					// 调用定时器之前关闭其他定时器
+					clearInterval(timer);
+					
+					// 通过getStyle获取样式值
+					var oldValue = getStyle(box1, "left");
+					
+					var newValue = parseInt(oldValue)
+					timer = setInterval(function(){
+						
+						box1.style.left = newValue++ + "px";
+						if(box1.offsetLeft >= 800){
+							
+							clearInterval(timer);
+						}
+						
+					}, 1)
+					
+					
+				};
+			};
+			
+			
+			/**
+			 * 定义函数获取当前指定元素的样式
+			 * 参数：
+			 * 	obj 要获取样式元素
+			 * 	name 要获取的样式
+			 */
+			function getStyle(obj, name){
+				
+				// 区分ie8和其他浏览器
+				/**
+				 * getCumputedStyle是变量，如果不存在则报错
+				 * window.getCumputedStyle是属性，如果不存在则返回undefined
+				 */
+				if(window.getComputedStyle){
+					return window.getComputedStyle(obj, null)[name];
+				}else{
+					return obj.currentStyle[name];
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn01">点击按钮，div自动右移</button>
+		<br />
+		<br />
+		<div id="box1"></div>
+		
+		<div style="width: 0px; height: 1000px; top: 0; border: 1px red solid; position: absolute; border-left: 1px; left: 800px;"></div>
+	</body>
+</html>
