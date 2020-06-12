@@ -2,12 +2,7 @@ package pers.jeffy.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
-import org.apache.hadoop.yarn.api.records.URL;
 import org.junit.jupiter.api.Test;
-
-import javax.sound.midi.Soundbank;
-import java.awt.*;
-import java.awt.datatransfer.FlavorEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

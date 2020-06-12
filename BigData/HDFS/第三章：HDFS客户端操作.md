@@ -264,3 +264,132 @@ public void testListStatus() throws IOException, URISyntaxException, Interrupted
   > d: usr
   > f: wc.input
 
+#### 3.3 HDFS的I/O流操作
+
+​	API操作是由HDFS系统框架封装好的，如果我们想自己实现3.2中的API操作则可以采用IO流方式实现数据的上传和下载。
+
+##### 3.3.1 HDFS文件上传
+
+1. 需求：把本地E盘中的xiaoxx.txt上传到HDFS根目录
+
+2. 源码
+
+   ```java
+   // 把本地E盘中的testFile.txt上传到HDFS根目录
+   @Test
+   public void putFileToHDFS() throws URISyntaxException, IOException, InterruptedException {
+   
+       // 1.获取fs对象
+       Configuration conf = new Configuration();
+       FileSystem fs = FileSystem.get(new URI("hdfs://hadoop-101:9000"), conf, "jeffy");
+   
+       // 2.获取输入流
+       FileInputStream fis = new FileInputStream(new File("e:/testFile.txt"));
+   
+       // 3.获取输出流
+       FSDataOutputStream fos = fs.create(new Path("/xiaoxxx.txt"));
+   
+       // 4.流的对拷
+       IOUtils.copyBytes(fis,fos,conf);
+   
+       // 5.关闭资源
+       IOUtils.closeStream(fos);
+       IOUtils.closeStream(fis);
+       fs.close();
+   }
+   ```
+
+##### 3.3.2 HDFS文件下载
+
+1. 需求：从HDFS上下载xiaoxx.txt文件到本地的e盘
+
+2. 源码
+
+   ```java
+   // 从HDFS上下载xiaoxxx.txt文件到本地的e盘
+   @Test
+   public void getFileFromHDFS() throws IOException, URISyntaxException, InterruptedException {
+   
+       // 1.获取fs对象
+       Configuration conf = new Configuration();
+       FileSystem fs = FileSystem.get(new URI("hdfs://hadoop-101:9000"), conf, "jeffy");
+   
+       // 2.获取输入流
+       FSDataInputStream fis = fs.open(new Path("/xiaoxxx.txt"));
+   
+       // 3.获取输出流
+       FileOutputStream fos = new FileOutputStream(new File("e:/xiaoxx.txt"));
+   
+       // 4.流的对拷
+       IOUtils.copyBytes(fis,fos,conf);
+   
+       // 5.关闭资源
+       IOUtils.closeStream(fos);
+       IOUtils.closeStream(fis);
+       fs.close();
+   }
+   ```
+
+#### 3.3.3 文件的定位读取
+
+1. 需求：获取HDFS上的某一个文件块
+
+2. 源码：
+
+   ```java
+   // 下载第一块
+   @Test
+   public void readFileSeed1() throws URISyntaxException, IOException, InterruptedException {
+   
+       // 1.获取对象
+       Configuration conf = new Configuration();
+       FileSystem fs = FileSystem.get(new URI("hdfs://hadoop-101:9000"), conf, "jeffy");
+   
+       // 2.获取输入流
+       FSDataInputStream fis = fs.open(new Path("/hadoop-3.2.1.tar.gz"));
+   
+       // 3.获取输出流
+       FileOutputStream fos = new FileOutputStream(new File("e:/hadoop-3.2.1.tar.gz.part1"));
+   
+       // 4.流的对拷 -- 只考128M
+       byte[] buf = new byte[1024];
+       for (int i = 0; i < 1024 * 128; i++) {
+   
+           fis.read(buf);
+           fos.write(buf);
+       }
+   
+       // 5.关闭资源
+       IOUtils.closeStream(fos);
+       IOUtils.closeStream(fis);
+       fs.close();
+   }
+   
+   // 下载第二块
+   @Test
+   public void feadFileSeek2() throws IOException, URISyntaxException, InterruptedException {
+   
+       // 1.获取fs对象
+       Configuration conf = new Configuration();
+       FileSystem fs = FileSystem.get(new URI("hdfs://hadoop-101:9000"), conf, "jeffy");
+   
+       // 2.获取输入流
+       FSDataInputStream fis = fs.open(new Path("/hadoop-3.2.1.tar.gz"));
+   
+       // 3.设置读取的起点 -- 128M
+       fis.seek(1024*1024*128);
+   
+       // 4.获取输出流
+       FileOutputStream fos = new FileOutputStream(new File("e:/hadoop-3.2.1.tar.gz.part2"));
+   
+       // 5.流的对拷
+       IOUtils.copyBytes(fis,fos, conf);
+   
+       // 6.关闭资源
+       IOUtils.closeStream(fos);
+       IOUtils.closeStream(fis);
+       fs.close();
+   }
+   ```
+
+   
