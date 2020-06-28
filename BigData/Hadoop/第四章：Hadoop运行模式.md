@@ -146,7 +146,7 @@ nameNode与dateNode的clusterID需要保持一致来进行通讯，如果格式�
 
 https://blog.csdn.net/qq_41515513/article/details/101873098
 
-* -- 配置：yarn-env.sh -- 配置JAVA_HOME
+* -配置：yarn-env.sh -- 配置JAVA_HOME
 
 * 配置：yarn-site.xml
 
@@ -447,13 +447,14 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     		<property>
     			<name>dfs.namenode.secondary.http-address</name>
     			<value>hadoop-103:50090</value>
+    		</property>
     </configuration>
-    ```
-
-  - 配置：yarn-env.sh -- JAVA_HOME(3中无需配置)
-
-  - 配置：yarn-site.xml
-
+  ```
+  
+- 配置：yarn-env.sh -- JAVA_HOME(3中无需配置)
+  
+- 配置：yarn-site.xml
+  
     ```bash
     <!-- Reducer 获取数据的方式 -->
     <property>
@@ -465,12 +466,12 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     	<name>yarn.resourcemanager.hostname</name>
         <value>hadoop-102</value>
     </property>
-    ```
-
-  - 配置：mapred-env.sh  -- JAVA_HOME(3中无需配置)
-
-  - 配置：mapred-site.xml
-
+  ```
+  
+- 配置：mapred-env.sh  -- JAVA_HOME(3中无需配置)
+  
+- 配置：mapred-site.xml
+  
     ```bash
     <configuration>
     	<!-- 指定MR运行在YARN上 -->
@@ -494,7 +495,6 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
     		</value>
     	</property>
     </configuration>
-    
     ```
 
   #### 4.3.4 单点启动
@@ -504,7 +504,7 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
   #### 4.3.5 SSH无密码登录配置
 
   * 配置ssh
-    1. 基本语法：ssh ip
+    1. 基本语法：ssh #ip
   * ssh连接时出现Host key verification failed的解决办法
 
   - 免密登录原理
@@ -517,7 +517,7 @@ https://blog.csdn.net/qq_41515513/article/details/101873098
 
   * 将公钥拷贝到免密登录的目标机器上
 
-    > ssh-copy-id targetIP
+    > ssh-copy-id #targetIP
     >
     > 注：本机中也需要拷贝公钥生成authorized_keys文件
 
