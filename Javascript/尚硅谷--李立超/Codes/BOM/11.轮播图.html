@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			#outer{
+				/* 设置宽高 */
+				width: 820px;
+				height: 500px;
+				/* 设置居中 */
+				margin: 50px auto;
+				/* 设置背景 */
+				background-color: greenyellow;
+				/* 设置padding */
+				padding: 10px 0;
+				
+				/*开启相对定位*/
+				position: relative;
+				
+				/* 隐藏溢出 */
+				/* overflow: hidden; */
+			}
+			
+			/* 设置imgList */
+			#imgList{
+				/* 去除项目符号 */
+				list-style: none;
+				
+				/* 设置ul的宽度 */
+				/* width: 3200px; */
+				
+				/* 开启绝对定位 */
+				position: absolute;
+				
+				/* 设置偏移量 */
+				/* 每移动一张图片，偏移量向左移动一张图片的宽度 -- 820 */
+				/* left: -820px; */
+				
+				
+			}
+			
+			/* 设置图片中的li */
+			#imgList li{
+				/* 设置浮动 */
+				float: left;
+				/* 设置外边距 */
+				margin: 0 10px;
+			}
+			
+			#navDiv{
+				/* 开启绝对定位 */
+				position: absolute;
+				
+				/* 设置位置 */
+				bottom: 15px;
+				
+				/* 设置left值
+					outer宽度 820
+					navDiv宽度：25*4=100
+						820 - 100 = 720/2 = 360
+				 */
+				/* left: 360px; */
+				
+			}
+			
+			/* 设置导航按钮 */
+			#navDiv a{
+				/* 设置浮动 */
+				float: left;
+
+				/* 设置宽高 */
+				width: 15px;
+				height: 15px;
+				
+				/* 设置左右外边距 */
+				margin: 0 2px;
+				
+				/* 设置背景颜色 */
+				background-color: red;
+				
+				/* 设置透明度 */
+				opacity: 0.5;
+				/* 兼容ie8透明度 */
+				filter: alpha(opecity=50); 
+			}
+			
+			#navDiv a:hover{
+				background-color: black;
+			}
+		</style>
+		
+		<!-- 引入工具 -->
+		<script src="js/tools.js" type="text/javascript" charset="utf-8">
+			
+			
+		</script>
+		
+		<script type="text/javascript">
+			
+			window.onload = function(){
+							
+				var imgList = document.getElementById("imgList");
+				
+				// 获取页面中所有图片
+				var imgArr = document.getElementsByTagName("img");
+				
+				// 设置imgList的宽度
+				imgList.style.width = 820 * imgArr.length + "px";
+				
+				/**
+				 * 设置导航按钮居中
+				 */
+				// 获取navDiv
+				var navDiv = document.getElementById("navDiv");
+				// 获取outer
+				var outer = document.getElementById("outer");
+				
+				// 设置navDiv的left值
+				navDiv.style.left = (outer.offsetWidth - navDiv.offsetWidth) / 2 + "px";
+				
+				
+				// 默认显示索引
+				var index = 0;
+				
+				// 获取所有的a
+				var allA = document.getElementsByTagName("a");
+				
+				// 设置 默认选中的效果
+				allA[index].style.backgroundColor = "black";
+				
+				// 点击超链接，切换到指定的图片 
+				// 为所有的超链接绑定单机相应函数
+				for (var i = 0; i < allA.length; i++) {
+					
+					// 为每一个超链接添加index属性
+					allA[i].index = i;
+					
+					allA[i].onclick = function(){
+						
+						// 获取点击的超链接的索引
+						index = this.index;
+						
+						// 切换图片
+						// imgList.style.left = index * -820 + "px";
+						
+						// 修改选中的a
+						setA();
+						
+						// 使用move工具
+						// move(imgList, "left", 20, -820*index, function(){
+							
+						// });
+						
+						move(imgList, "left", 20, -820*index, function(){});
+					}
+				}
+				
+				autoChange();
+				// 创建一个方法，设置选中的a
+				function setA(){
+					
+					// 遍历所有的a，所有设置为红色
+					for (var i = 0; i < allA.length; i++) {
+						
+						/**
+						 * 内联样式优先级高
+						 * 	将内联样式设置为"",则获取默认样式
+						 */
+						allA[i].style.backgroundColor = "";
+					}
+					
+					// 设置选中的a为黑色
+					allA[index].style.backgroundColor = "black";
+				}
+				
+				function autoChange(){
+					
+					setInterval(function(){
+						index = ++index%imgArr.length;
+						
+						move(imgList, "left", 20, -820*index, function(){
+							setA();
+						})
+					}, 3000);
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<!-- 创建一个外部的div，来作为大的容器 -->
+		<div id="outer">
+			<!-- 创建ul，用来放置图片-->
+			<ul id="imgList">
+				<li>
+					<img style="width: 800px; height: 500px;" src="../DOM/IMG/01.jpg" >
+				</li>
+				<li>
+					<img style="width: 800px; height: 500px;" src="../DOM/IMG/02.jpg" >
+				</li>
+				<li>
+					<img style="width: 800px; height: 500px;" src="../DOM/IMG/03.jpg" >
+				</li>
+				<li>
+					<img  style="width: 800px; height: 500px;" src="../DOM/IMG/04.jpg" >
+				</li>
+				<li>
+					<img style="width: 800px; height: 500px;" src="../DOM/IMG/01.jpg" >
+				</li>
+			</ul>
+			<!-- 创建导航按钮 -->
+			<id id="navDiv">
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+			</id>
+		</div>
+	</body>
+</html>

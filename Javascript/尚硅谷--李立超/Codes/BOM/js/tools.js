@@ -29,7 +29,7 @@ function move(obj, attr, speed, target, callback){
 			clearInterval(obj.timer);
 			callback && callback();
 		} 
-	}, 1)
+	}, 30)
 }
 
 /**
