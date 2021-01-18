@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>05-jQuery核心函数</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+
+        /* $();或jQuery();就代表调用jQuery的核心函数 */
+        // 1.接收一个函数 -- 入口函数
+        $(function(){
+            // 2.接收一个字符串
+            // 2.1 接收一个字符串选择器 -- 返回jQuery对象, 对象中包保存了找到的DOM元素
+            let $box1 = $(".box1");
+            let $box2 = $("#box2");
+
+            console.log($box1);
+            console.log($box2);
+
+            // 2.2 接收一个字符串代码片段 -- 返回jQuery对象, 对象中保存了创建(根据字符串解析)的DOM元素
+            let $p = $("<p>这是一个段落</p>");
+            console.log($p);
+            $box1.append($p);
+
+            // 3.接收一个DOM元素 -- 将js原生的DOM元素封装成jQuery对象返回
+            let span = document.getElementsByTagName("span")[0];
+            console.log(span)
+            let $span = $(span);
+            console.log($span);
+        })
+    </script>
+</head>
+<body>
+    <div class="box1"></div>
+    <div id="box2"></div>
+    <span>这是一个span</span>
+</body>
+</html>

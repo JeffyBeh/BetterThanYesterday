@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>20-jQuery尺寸和位置操作</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0
+        }
+
+        .father{
+            height: 200px;
+            width: 200px;
+            background: red;
+            border: 50px solid;
+            position: relative;
+            margin-left: 50px;
+        }
+
+        .son{
+            height: 100px;
+            width: 100px;
+            background: blue;
+            /*
+                left和top配合position使用，根据position来决定偏移, 不会超出父元素 -- 有定位时优先使用
+                margin-left等忽略position直接作用与盒子模型，如果开启定位，会在相对之上再增加（left + margin-left），会超出父元素
+             */
+            left: 50px;
+            top: 50px;
+            /*margin-left: 100px;*/
+            position: absolute;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            /*
+                relation：相对于document的定位 -- 即相对于默认设置的定位
+                absolute：相对于除static外的最近的祖先元素的定位
+                fixed：相对于浏览器窗口
+                static：默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right 或者 z-index 声明）。
+                inherit：继承父类position属性
+
+                子绝父相
+             */
+            let btns = document.getElementsByTagName("button");
+            // 1.offset() -- 方法
+            // 元素距离document的距离
+            // get offset
+            btns[0].onclick = function(){
+                console.log($(".father").offset().left);
+            }
+
+            // set offset
+            btns[1].onclick = function(){
+                console.log($(".son").offset().left);
+                $(".son").offset({
+                    left: 100
+                });
+            }
+
+            // 2.position -- can't set value
+            // 元素距离定位元素的距离
+            btns[2].onclick = function(){
+                console.log($(".son").position().left);
+            }
+
+        })
+    </script>
+</head>
+<body>
+<button>get offset</button>
+<button>set offset</button>
+<button>get position</button>
+<!-- div.father>div.son -->
+<div class="father">
+    <div class="son"></div>
+</div>
+</body>
+</html>

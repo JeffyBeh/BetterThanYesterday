@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10-jQuery其他静态方法</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        // 数组
+        let arr = [1, 3, 5, 7, 9];
+        // 伪数组
+        let arrLike = { 0:2, 1:4, 2:6, 3:8, 4:10, length:5 };
+        // 方法
+        let fun = function(){};
+        // 对象
+        let obj = { name:"wanger", age:15 };
+        // window对象
+        let w = window;
+
+        console.log("==========trim==========");
+        let str = "    str    ";
+        console.log("++++" + str + "+++++");
+        console.log("++++" + $.trim(str) + "+++++");
+
+        console.log("===========isArray=======");
+        console.log($.isArray(arrLike));
+
+        console.log("===========isFunction=======");
+        console.log($.isFunction(obj));
+
+        console.log("===========isWindow=======");
+        console.log($.isWindow(w));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

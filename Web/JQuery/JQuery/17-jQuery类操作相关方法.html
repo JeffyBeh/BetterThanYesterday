@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>17-jQuery类操作相关方法</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .class1{
+            height: 200px;
+            width: 200px;
+            background: red;
+        }
+        .class2{
+            height: 200px;
+            width: 200px;
+            border: 10px solid blue;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            let btn = document.getElementsByTagName("button");
+            let $div = $("div").eq(0);
+
+            /*
+                添加类--addClass
+                    添加多个通过空格隔开即可
+             */
+            btn[0].onclick = function(){
+
+                $div.addClass("class1 class2");
+            }
+
+            // 删除类 -- removeClass -- 多个通过空格隔开
+            btn[1].onclick = function(){
+                $div.removeClass("class2");
+            }
+
+            // 变更类 -- toggleClass：有就删除，没有就添加
+            btn[2].onclick = function(){
+                $div.toggleClass("class2");
+            }
+        })
+    </script>
+</head>
+<body>
+<button>添加类</button>
+<button>删除类</button>
+<button>变更类</button>
+<br/>
+<div></div>
+</body>
+</html>

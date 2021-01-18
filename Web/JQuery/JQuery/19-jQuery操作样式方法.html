@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>19-jQuery操作样式方法</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        $(function () {
+
+            let $div = $("div");
+            // 1. one by one
+            $div.css("height", "100px");
+            $div.css("width", "100px");
+            $div.css("background-color", "red");
+
+            // 2. linked
+            $div.css("height", "200px").css("width", "200px").css("background-color", "blue");
+
+            // 3. batch -- css object
+            // 和style中设置样式差不多，但是需要使用""将变量和值引起来
+            $div.css({
+                "width": "100px",
+                "height": "100px",
+                "background": "yellow"
+            })
+
+            // 4. get css style
+            console.log($div.css("background"));
+        })
+    </script>
+</head>
+<body>
+<div></div>
+</body>
+</html>

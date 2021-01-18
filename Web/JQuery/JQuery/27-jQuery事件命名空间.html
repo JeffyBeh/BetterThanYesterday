@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>27-jQuery事件命名空间</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0
+        }
+        .father{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+    </style>
+    <script>
+        $(function () {
+            /*
+                自定义命名空间
+                    1.事件通过on绑定， $().on("eventName.nameSpace", fc)
+                        手动触发事件时, 不论是否定义空间都会被触发, 事件冒泡亦是如此
+                    2.通过trigger触发单个事件
+                        2.1 触发带有命名空间的事件，则只触发和冒泡带有命名空间的事件
+                        2.2 触发不带命名空间的事件，则触发和冒泡所有事件
+             */
+            //
+            // $(".son").on("click", function(){
+            //       alert("son click");
+            // })
+
+            // $(".father").click(function(){
+            //     alert("father click");
+            // })
+
+            $(".son").on("click.zs", function(){
+                alert("son click.zs");
+            })
+
+            $(".father").on("click", function(){
+                alert("father click");
+            })
+
+            $(".father").on("click.zs", function(){
+                alert("father click.zs");
+            })
+
+            $(".son").trigger("click.zs");
+        })
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+</body>
+</html>

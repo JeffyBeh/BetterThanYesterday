@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>25-jQuery事件自动触发</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0
+        }
+        .father{
+            height: 200px;
+            width: 200px;
+            background: red;
+        }
+        .son{
+            height: 100px;
+            width: 100px;
+            background: blue;
+        }
+    </style>
+
+    <script>
+        $(function () {
+
+            /*
+               1. trigger("eventName") -- 触发冒泡和默认事件
+               2. triggerHandler("eventName") -- 不触发冒泡和默认事件
+             */
+
+            let $father = $(".father");
+            let $son = $(".son");
+
+            $son.click(function(){
+                alert("son click");
+            })
+
+            $father.click(function(){
+                alert("father click")
+            })
+            // 触发冒泡
+            // $son.trigger("click");
+            // 不触发冒泡
+            $son.triggerHandler("click");
+
+
+            $("input[type='submit']").click(function(){
+                alert("submit");
+            })
+            // 触发默认事件
+            // $("input[type='submit']").trigger("click");
+            // 不触发默认事件
+            // $("input[type='submit']").triggerHandler("click");
+
+            $("a").click(function(){
+                alert("a a a ");
+            })
+
+            // trigger不能触发a标签的默认事件
+            // $("a").trigger("click");
+            // a标签可以利用事件冒泡实现默认事件: 添加span并触发span的事件
+            $("span").trigger("click");
+        })
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+<!--<a href="http://www.baidu.com">百度一下, 你也啥都不知道</a>-->
+<a href="http://www.baidu.com"><span>百度一下, 你也啥都不知道</span></a>
+<form action="http://www.taobao.com">
+    <label>
+        <input type="text">
+        <input type="submit">
+    </label>
+</form>
+</body>
+</html>

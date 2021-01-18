@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>18-jQuery文本值相关操作</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+
+            let btn = document.getElementsByTagName("button");
+            console.log(btn);
+            // html([val|fn]) == innerHTML
+            btn[0].onclick = function(){
+                $("div").html("<p>this is a paragraph<br/><span>this is a span</span><p/>");
+            }
+
+            btn[1].onclick = function(){
+                console.log($("div").html());
+            }
+            
+            // text([val|fn]) == innerText
+            btn[2].onclick = function(){
+                $("div").text("<p>this is a paragraph<br/><span>this is a span</span><p/>");
+            }
+            
+            btn[3].onclick = function(){
+                console.log($("div").text());
+            }
+            
+            // val([val|fn|arr]) == value
+            btn[4].onclick = function(){
+                $("input").val("this is a value of input");
+            }
+            
+            btn[5].onclick = function(){
+                console.log($("input").val());
+            }
+        })
+    </script>
+</head>
+<body>
+<button>set HTML</button>
+<button>get HTML</button>
+<button>set Text</button>
+<button>get Text</button>
+<button>set value</button>
+<button>get value</button>
+<div>
+</div>
+<label>
+    <input type="text"/>
+</label>
+</body>
+</html>

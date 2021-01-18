@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js和jQuery的区别</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+
+        /*
+            区别1：
+                js中onload会覆盖
+                jQuery中onload不会被覆盖，按顺序执行
+            区别2：
+                js会等到DOM元素加载完毕，包括图片
+                jQuery会等到DOM元素加载完毕，但不包括图片
+         */
+  /*      window.onload = function (){
+            // 获取标签
+            let imgObj = document.getElementsByTagName("img")[0];
+            // console.log(imgObj);
+            // 获取图片宽度
+            let width = imgObj.width; // 180
+            console.log("width", width);
+        }
+
+        window.onload = function (){
+            // 获取标签
+            let imgObj = document.getElementsByTagName("img")[0];
+            // console.log(imgObj);
+            // 获取图片宽度
+            let height = imgObj.height; // 180
+            console.log("height", height);
+        }*/
+
+        $(document).ready(function (){
+
+            let $img = $("img")[0];
+            let width = $img.width;
+            console.log("width", width); // 0
+        })
+
+        $(document).ready(function (){
+
+            let $img = $("img")[0];
+            let height = $img.height;
+            console.log("height", height); // 0
+        })
+    </script>
+</head>
+<body>
+    <img src="https://img.alicdn.com/tfscom/i4/654230132/O1CN011CqUjXBxyNTXTMy_!!654230132.jpg_180x180xzq90.jpg_.webp"
+         alt=""/>
+</body>
+</html>

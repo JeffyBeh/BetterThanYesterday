@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>15-jQuery中的prop方法</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            /*
+                prop与attr方法用法相似
+                区别：
+                    prop方法既可以获取属性，也可以获取属性节点
+                    prop方法可以获取属性节点的返回值，attr不能
+                        官方推荐：带有boolean返回值的属性节点，如checked、selected、disabled，使用prop方法，其他使用attr方法
+             */
+
+            // jQuery使用.eq(index)获取相应下标的DOM元素
+            let $span = $("span").eq(0);
+            console.log($span);
+            console.log($span.prop("demo", "demo"))
+
+            console.log($("input").eq(0).prop("checked"))
+            console.log($("input").eq(0).attr("checked"))
+        })
+    </script>
+</head>
+<body>
+<span class="span1" name="yi"></span>
+<span class="span2" name="er"></span>
+<input type="checkbox"/>
+</body>
+</html>

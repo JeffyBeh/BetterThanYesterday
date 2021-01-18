@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>21-jQuery的scrollTop方法</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            border: 1px solid;
+            overflow: auto;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+
+            /*
+                对于jQuery对象
+                通过 $("name").eq(ind) 获取的仍然是jQuery对象
+                通过 $("name")[ind] 获取的是js对象 $btns("button")[0] = document.getElementsByTagName("button")[0]
+                如果不设置下标则默认为所有 $btn.click -- 表示为每一个btn增加click事件
+            */
+            let $btns = $("button");
+
+            let btns = document.getElementsByTagName("button");
+
+            console.log(btns[0]);
+            btns[0].onclick = function(){
+
+            }
+
+            console.log($btns[0]);
+            $btns[0].onclick = function(){
+
+            }
+
+            $btns.eq(0).click(function(){
+
+                // 获取元素的滚动高度
+                // console.log($("div").scrollTop());
+
+                /*
+                    获取页面的滚动高度
+                    $("html")--其他浏览器 和$("body")--id
+                 */
+                // 使用该方法获取页面滚动高度,实现兼容
+                console.log($("html").scrollTop() + $("body").scrollTop());
+            })
+            console.log($btns.eq(0));
+
+
+            $btns.eq(1).click(function () {
+
+                // 设置滚动高度
+                // $("div").scrollTop(100);
+
+                // 设置页面滚动高度
+                // 方式兼容ie
+                $("html, body").scrollTop(200);
+            });
+            console.log($btns.eq(1));
+
+
+        })
+    </script>
+</head>
+<body>
+<div>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+    我是div;<br/>
+</div>
+<button>get</button>
+<button>set</button>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+</body>
+</html>

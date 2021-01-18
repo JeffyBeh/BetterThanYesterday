@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04-jQuery冲突问题解决</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        /*
+            问题描述：多个框架$都定义了$符号，导致$符号使用冲突
+            解决方案: 释放$符号的使用权
+         */
+        // 1.直接释放$使用权, 使用jQuery代替
+    /*    jQuery.noConflict();
+        jQuery(function(){
+            alert("write less, do more");
+        })*/
+
+        // 2.定义其他符号
+        let $$ = jQuery.noConflict();
+        $$(function(){
+            alert("write less, do more");
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

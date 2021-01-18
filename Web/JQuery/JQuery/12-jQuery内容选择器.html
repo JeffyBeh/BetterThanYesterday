@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>12-jQuery内容选择器</title>
+
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: #ff0000;
+            margin-top: 2px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+
+            // :contains(text) 匹配包含给定文本的元素
+            console.log("============contains===========")
+            let $contains = $("div:contains('我是div')")
+            console.log($contains)
+            // :empty 匹配所有不包含子元素或者文本的空元素
+            console.log("============empty===========")
+            let $empty = $("div:empty")
+            console.log($empty)
+            // :has(selector) 匹配含有选择器所匹配的元素的元素
+            console.log("============has===========")
+            let $has = $("div:has('p')")
+            console.log($has)
+            // :parent 匹配含有子元素或者文本的元素
+            console.log("============parent===========")
+            let $parent = $("div:parent")
+            console.log($parent)
+        })
+    </script>
+</head>
+<body>
+<div></div>
+<div>我是div</div>
+<div>我也是div</div>
+<div><span>span</span></div>
+<div><p>p</p></div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>07-静态方法和实例方法</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+
+        function AClass(){
+
+        }
+
+        // 1.静态方法
+        AClass.staticMethod = function(){
+            alert("staticMethod");
+        }
+
+        // 静态方法通过类名.方法名调用
+        AClass.staticMethod();
+
+        // 2.实例方法
+        AClass.prototype.instanceMethod = function(){
+            alert("instanceMethod");
+        }
+
+        // 实例方法通过实例(对象)调用
+        let aClass = new AClass();
+        aClass.instanceMethod();
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

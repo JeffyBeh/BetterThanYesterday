@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>28-jQuery事件委托</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            // jQuery 3.0中已弃用此方法，请用 on()代替
+            // delegate(selector,[type],[data],fn)
+
+            $("button").click(function(){
+                $("ul").append("<li>new li</li>");
+            })
+
+            /*
+                如果将事件绑定到li上, 则绑定事件在界面初始化之后完成, 无法为新增的元素绑定该事件
+                通过是将事件委派给其父元素(或原始界面中的元素), 可以为动态添加的元素绑定相应事件
+             */
+            $("ul").on("click", "li", function(){
+                alert($(this).html())
+            })
+        })
+    </script>
+</head>
+<body>
+<!-- ul>li{第$个li}*3 -->
+<ul>
+    <li>第1个li</li>
+    <li>第2个li</li>
+    <li>第3个li</li>
+</ul>
+<button>new li</button>
+</body>
+</html>

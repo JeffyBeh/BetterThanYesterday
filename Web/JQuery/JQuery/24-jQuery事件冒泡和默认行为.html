@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>24-jQuery事件冒泡和默认行为</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0
+        }
+        .father{
+            height: 200px;
+            width: 200px;
+            background: red;
+        }
+        .son{
+            height: 100px;
+            width: 100px;
+            background: blue;
+        }
+    </style>
+    <script>
+        $(function () {
+            /*
+                1.什么是事件冒泡
+
+                2.如何阻止事件冒泡
+
+                3. 什么是默认行为
+                    事件本身自有行为, 如: 超链接(a标签, 表单提交等)
+                4.如何阻止默认行为
+             */
+
+            let $father = $(".father");
+            let $son = $(".son");
+
+            $father.click(function(){
+                alert("father");
+            })
+
+            $son.click(function(){
+                alert("son");
+
+                // 阻止事件冒泡
+                // 方法一
+                return false;
+
+                // Deprecated symbol used, consult docs for better alternative
+                // event.stopPropagation();
+            })
+
+            $("a").click(function(){
+
+                // 阻止默认事件
+                return false;
+
+                // Deprecated symbol used, consult docs for better alternative
+                // event.preventDefault;
+            })
+
+            $("input[type='submit']").click(function(){
+                return false;
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+<a href="http://www.baidu.com">baidu</a>
+<form action="http://www.taobao.com">
+   <label>
+       <input type="text">
+       <input type="submit">
+   </label>
+</form>
+</body>
+</html>

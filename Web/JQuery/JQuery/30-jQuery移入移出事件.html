@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>30-jQuery移入移出事件</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .father, .father1, .father2{
+            width: 200px;
+            height: 200px;
+            background: red
+        }
+        .son, .son1, .son2{
+            width: 100px;
+            height: 100px;
+            background: blue;
+            /*margin-left: 500px*/
+        }
+    </style>
+    <script>
+        $(function () {
+
+           // mouseover -- 移入子元素同样会触发
+            $(".father").mouseover(function(){
+                alert("移入father--mouseover");
+            })
+
+            // mouseout -- 移出子元素同样会触发
+            $(".father").mouseout(function(){
+                alert("移出father--mouseout");
+            })
+
+            // mouseenter -- 移入子元素不会触发 -- 当子元素不在父元素内部(如设置了margin-left), 进入子元素同样会触发
+            $(".father1").mouseenter(function(){
+                alert("移入father--mouseenter");
+            })
+
+            // mouseleave -- 移出子元素不会触发 -- 当子元素不在父元素内部(如设置了margin-left), 进入子元素同样会触发发
+            $(".father1").mouseleave(function(){
+                alert("移出father--mouseleave");
+            })
+
+            // hover == mouseenter+mouseleave
+            // 一个参数则移入移出都触发同一个fn, 两个则第一个为移入,第二为移出
+            $(".father2").hover(function(){
+                alert("移入father--mousehover");
+            }, function(){
+                alert("移除father--mousehover");
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="father">
+    <div class="son"></div>
+</div>
+<br/>
+<div class="father1">
+    <div class="son1"></div>
+</div>
+<br/>
+<div class="father2">
+    <div class="son2"></div>
+</div>
+</body>
+</html>

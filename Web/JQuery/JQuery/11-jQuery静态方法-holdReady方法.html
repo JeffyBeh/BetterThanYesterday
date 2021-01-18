@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11-jQuery静态方法-holdReady方法</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        /*
+            jQuery的入口函数只是等到界面中的DOM元素加载完毕即执行, 不会等待图片、其他框架、其他插件加载完毕
+            我们可以通过holdReady来控制jQuery的入口函数是否执行
+         */
+        $.holdReady(true);
+        $(document).ready(function(){
+            alert("Ready");
+        })
+    </script>
+</head>
+<body>
+    <button>恢复Ready事件</button>
+    <script>
+        let btn = document.getElementsByTagName("button")[0];
+        btn.onclick = function(){
+            $.holdReady(false);
+        }
+    </script>
+</body>
+</html>

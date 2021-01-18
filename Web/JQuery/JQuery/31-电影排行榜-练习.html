@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>31-电影排行榜</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 300px;
+            height: 500px;
+            margin: 100px auto;
+            border: 1px solid #000;
+        }
+        .box>h1{
+            /*font size*/
+            font-size: 20px;
+            /*font color*/
+            color: deeppink;
+            /*line height*/
+            line-height: 35px;
+            padding-left: 15px;
+            border: 1px dashed #ccc
+        }
+        ul>li{
+            /* set no symbol of li */
+            list-style: none;
+            padding: 10px 15px;
+            /* 相邻li边框会重叠，颜色会加深 */
+            border: 1px dashed #ccc
+        }
+
+        /*
+            :nth-child(n): 父元素的第n个子元素
+                odd: 奇数
+                even：偶数
+                an+b：如-n+3 表示第3， 2， 1个
+        */
+        /* ul中的第3 2 1个li下的span */
+        ul>li:nth-child(-n+3) span{
+            background: deeppink;
+
+        }
+        /*
+            display: none -- 元素隐藏且不占位置
+            display: block -- 块元素：div/p/ul/li/h1-h6/dl/dt/dd
+                1. 支持全部样式
+                2. 如果没有设置宽度则为父元素的100%
+                3. 独占一行，超过宽度后会换行
+            display: inline -- 内敛元素：a/span/em/b/strong/i
+                1. 支持部分样式（不支持宽、高、margin上下、padding上下）
+                2. 宽度由内容填充
+                3. 盒子并在一行
+                4. 代码换行盒子会差生间距
+                5. 子元素为内联元素，父元素可以使用text-align属性是设置子元素水平对齐方式
+            display: inline-block -- 内敛块元素：
+                1. 支持全部样式
+                2. 如果没有设置宽度，宽度由盒子内容决定
+                3. 盒子并在一起
+                4. 代码换行盒子会差生间距
+                5. 子元素为内联元素，父元素可以使用text-align属性是设置子元素水平对齐方式
+         */
+        ul>li>span{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #ccc;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 10px
+        }
+        .context{
+            /*
+                overflow: 规定当内容溢出元素框时发生的事情 -- 默认值：visible, 继承：no
+                    visible: 默认值。内容不会被修剪，会呈现在元素框之外。(子元素浮动，父元素相应位置无法被填充)
+                    hidden: 内容会被修剪，并且其余内容是不可见的。
+                    scroll: 内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+                    auto: 如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+                    inherit: 规定应该从父元素继承 overflow 属性的值。
+
+            */
+            overflow: hidden;
+            display: none
+        }
+        .context>img{
+            width: 80px;
+            height: 120px;
+            margin-top: 5px;
+            /* 左浮 */
+            float: left
+        }
+        .context>p{
+            font-size: 14px;
+            width: 180px;
+            height: 132px;
+            float: right
+        }
+
+        .current .context{
+            display: block;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+
+            $("li").hover(function(){
+                $(this).addClass("current");
+            }, function(){
+                $(this).removeClass("current");
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="box">
+    <h1>电影排行榜</h1>
+    <ul>
+        <li><span>1</span>电影名称
+            <div class="context">
+                <img src="res/zl.jpg" alt=""/>
+                <p>这一行动令冷锋遭到军方禁闭甚至强制退伍的处罚,不过各特种部队精英组成超级特种部队战狼中队的中队长龙小云(余男 饰),却十分欣赏这个敢作敢为且业务过硬的血性男儿...</p>
+            </div>
+        </li>
+        <li><span>2</span>电影名称
+            <div class="context">
+                <img src="res/zl.jpg" alt=""/>
+                <p>这一行动令冷锋遭到军方禁闭甚至强制退伍的处罚,不过各特种部队精英组成超级特种部队战狼中队的中队长龙小云(余男 饰),却十分欣赏这个敢作敢为且业务过硬的血性男儿...</p>
+            </div>
+        </li>
+        <li><span>3</span>电影名称
+            <div class="context">
+                <img src="res/zl.jpg" alt=""/>
+                <p>这一行动令冷锋遭到军方禁闭甚至强制退伍的处罚,不过各特种部队精英组成超级特种部队战狼中队的中队长龙小云(余男 饰),却十分欣赏这个敢作敢为且业务过硬的血性男儿...</p>
+            </div>
+        </li>
+        <li><span>4</span>电影名称
+            <div class="context">
+                <img src="res/zl.jpg" alt=""/>
+                <p>这一行动令冷锋遭到军方禁闭甚至强制退伍的处罚,不过各特种部队精英组成超级特种部队战狼中队的中队长龙小云(余男 饰),却十分欣赏这个敢作敢为且业务过硬的血性男儿...</p>
+            </div>
+        </li>
+        <li><span>5</span>电影名称
+            <div class="context">
+                <img src="res/zl.jpg" alt=""/>
+                <p>这一行动令冷锋遭到军方禁闭甚至强制退伍的处罚,不过各特种部队精英组成超级特种部队战狼中队的中队长龙小云(余男 饰),却十分欣赏这个敢作敢为且业务过硬的血性男儿...</p>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06-jQuery对象</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+
+        $(function(){
+
+            /*
+                1.jQuery对象: 伪数组
+                2.伪数组: 具有length属性, 并且index从0到length-1
+             */
+            let $div = $("div");
+            console.log($div);
+        })
+    </script>
+</head>
+<body>
+    <div class="box1">div1</div>
+    <div class="box2">div2</div>
+    <div class="box3">div3</div>
+</body>
+</html>

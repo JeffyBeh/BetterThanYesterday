@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>23-jQuery事件移除</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+
+            let $btn = $("button");
+
+            function click1(){
+                alert("click1");
+            }
+
+            function click2(){
+                alert("click1");
+            }
+
+            $btn.click(click1)
+            $btn.click(click2)
+
+            $btn.mouseenter(function(){
+                alert("mouseenter");
+            })
+            $btn.mouseleave(function(){
+                alert("mouseleave");
+            })
+
+            // off
+            // 默认移除所有绑定事件
+            // $btn.off();
+
+            // 移除单个事件
+            // $btn.off("click");
+
+            // 移除单个事件中的某个方法(一个事件可以绑定多个方法)
+            $btn.off("click", click1);
+        })
+    </script>
+</head>
+<body>
+<button>Click</button>
+</body>
+</html>
