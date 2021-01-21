@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>32-练习-电影选项卡</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        div{
+            width: 600px;
+            height: 500px;
+            margin: 100px auto;
+            border: 1px solid #000;
+        }
+
+        .menu>li{
+            list-style: none;
+            float: left;
+            display: inline-block;
+            width: 150px;
+            height: 100px;
+            text-align: center;
+            /*这是line-height与父元素相同则垂直居中*/
+            line-height: 100px;
+            background: orange;
+        }
+
+        .menu>.defaultTab{
+            background: gray;
+        }
+
+        .image>li{
+            list-style: none;
+            display: none;
+        }
+
+        img{
+            width: 600px;
+            height: 400px;
+        }
+
+        .image>.defaultImg{
+            display: block;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            $(".menu>li").mouseenter(function () {
+
+                // 1.将选中tab背景设置为灰色
+                $(this).addClass("defaultTab");
+                /*
+                    恢复除当前元素 -- $().siblings()的其他元素的本经
+                 */
+                $(this).siblings().removeClass("defaultTab");
+                /*
+                    获取当前元素的下标 -- $().index()
+                    获取对应下标元素的图片并添加class
+                        $().eq(ind) -- 返回对应下标元素的jq对象
+                        $().get(ind) -- 返回对应下标元素
+                 */
+                $(".image>li").eq($(this).index()).addClass("defaultImg");
+                // 4.移除其他图片
+                $(".image>li").eq($(this).index()).siblings().removeClass("defaultImg");
+
+            });
+        })
+    </script>
+</head>
+<body>
+<div>
+    <ul class="menu">
+        <li class="defaultTab">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <ul class="image">
+        <li class="defaultImg">
+            <img  src="./res/wallhaven-kwgj7q.jpg" alt=""/>
+        </li>
+        <li>
+            <img src="./res/wallhaven-j5o6d5.jpg" alt=""/>
+        </li>
+        <li>
+            <img src="./res/wallhaven-kwgj7q.jpg" alt=""/>
+        </li>
+        <li>
+            <img src="./res/wallhaven-kwrkod.jpg" alt=""/>
+        </li>
+    </ul>
+
+</div>
+
+</body>
+</html>
