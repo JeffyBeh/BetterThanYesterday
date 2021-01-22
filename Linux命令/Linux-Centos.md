@@ -66,31 +66,35 @@ centos8中默认安装的python3.6.8
 
 1. 插件准备
 
-   >**#yum install gcc gcc-c++**
+   >yum install gcc gcc-c++
    >
-   >**#yum -y install gcc automake autoconf libtool make**
+   >yum install automake autoconf libtool make
    >
-   >**#yum groupinstall -y 'Development Tools'**
+   >yum groupinstall -y 'Development Tools'
    >
-   >**\# yum install -y gcc openssl-devel bzip2-devel libffi-devel**
+   >yum install -y gcc openssl-devel bzip2-devel libffi-devel
    >
    >
    >
+   >yum install -y  gcc gcc-c++ automake autoconf libtool make openssl-devel bzip2-devel libffi-devel
+   >
+   >yum groupinstall -y 'Development Tools'
+
    >另：（上述安装后无法安装ssl等模块）
    >
    >dnf install bzip2-devel expat-devel gdbm-devel \
-   > ncurses-devel openssl-devel readline-devel(识别退格等，不安装则直接识别为码值) \
-   >  sqlite-devel tk-devel xz-devel zlib-devel wget
+   >ncurses-devel openssl-devel readline-devel(识别退格等，不安装则直接识别为码值) \
+   >sqlite-devel tk-devel xz-devel zlib-devel wget
 
 2. 下载tar包并解压
 
 3. 检查编译环境
 
-   > **# ./configure prefix=/usr/local/python3.8 --enable-optimization**
+   > ./configure prefix=/usr/local/python3.8 --enable-optimization
 
 4. 编译安装
 
-   > **\# make -j 4 && make install**
+   > make -j 4 && make install
 
 5. 配置环境变量
 
@@ -121,7 +125,7 @@ vim vimrc
 set fileenc odings=utf-8,gb18030,gbk,gb2312,big5,latin1 # 加入gbk编码格式，选择需要编码格式添加即可
 ```
 
-##### 11. 网络
+#### 11. 网络
 
 - NetworkManager
 
@@ -141,7 +145,7 @@ set fileenc odings=utf-8,gb18030,gbk,gb2312,big5,latin1 # 加入gbk编码格式�
 
   NM_CONTROLLED=no
 
-##### 13. SSL_ERROR
+#### 13. SSL_ERROR
 
 curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to raw.githubusercontent.com:443 
 
@@ -163,4 +167,22 @@ $ find ./ -name *.log -type f -print -exec rm -rf {} \;
 -print -- 输出找到的符合要求文件
 -exec rm -rf {} \;  -- 对查询结果执行操作（执行删除操作)  {}  \;为固定格式
 ```
+
+#### 15. 编译
+
+​	configure --prefix=/installDir
+
+​		--prefix 指定安装目录，**如果不配置该选项，安装后可执行文件默认放在/usr /local/bin，库文件默认放在/usr/local/lib，配置文件默认放在/usr/local/etc，其它的资源文件放在/usr /local/share，比较分散。**
+
+​	make -j 4 && make install
+
+​		-j n: 执行核心（线程）数
+
+### 16.查看端口号[对应的进程]
+
+lsof -i[:port]
+
+netstat -tunlp [| grep port]
+
+![image-20210122165441135](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210122165441135.png)
 
