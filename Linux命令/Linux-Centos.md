@@ -144,6 +144,12 @@ set fileenc odings=utf-8,gb18030,gbk,gb2312,big5,latin1 # 加入gbk编码格式�
 - 不被管理 修改 ifcfg-\*
 
   NM_CONTROLLED=no
+  
+- 配置新ip
+
+  - vim /etc/sysconfig/network-scripts/ifcfg-ens33
+  - nmcli c reload -- 重启网卡
+  - nmcli c up ens33 -- 启用网卡
 
 #### 13. SSL_ERROR
 
@@ -184,5 +190,34 @@ lsof -i[:port]
 
 netstat -tunlp [| grep port]
 
-![image-20210122165441135](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210122165441135.png)
+### 17. 后台运行jar包
+
+```shell
+# 方式一: 该方式会锁定当前ssh窗口，使用CTRL+C或关闭窗口都会打断该进程
+java -jar xxx.jar
+
+# 方式二: 后台运行jar包，但是窗口关闭时会打断进程
+java -jar xxx.jar &
+
+# 方式三： 
+# nohup 不挂断后台运行，当账户退出或关闭窗口时不会中断进程，日志模式输出到当前目录的nohup.out中
+nohup java -jar xxx.jar &
+
+# 方式四：将日志重定向到log.log中
+nohup java -jar xxx.jar >log.log &
+
+# 查看后台进程
+jobs
+
+# 调回前台控制 -- fg + 后台作业编号
+fg n
+```
+
+### 18.YUM
+
+yum clean all
+
+yum makecache
+
+
 
